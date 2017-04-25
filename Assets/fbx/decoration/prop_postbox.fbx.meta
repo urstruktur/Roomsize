@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: a8cdf6c16a15ba84b9a7dfcae0060442
+timeCreated: 1492881885
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bigGuy
+    100002: Cube
+    100004: Cube.001
+    100006: furniture_Cube.000
+    100008: furniture_Cube.001
+    100010: furniture_Cube.003
+    100012: furniture_Cube.006
+    100014: furniture_cupboard_simple.002
+    100016: furniture_cupboard_simple.003
+    100018: furniture_cupboard_simple_02
+    100020: Lamp_B1
+    100022: Lamp_B2
+    100024: Lamp_base
+    100026: Lamp_Bulb
+    100028: Lampholder
+    100030: Lampshade
+    100032: Lampstrings
+    100034: //RootNode
+    100036: prop_postbox
+    100038: smallGuy
+    400000: bigGuy
+    400002: Cube
+    400004: Cube.001
+    400006: furniture_Cube.000
+    400008: furniture_Cube.001
+    400010: furniture_Cube.003
+    400012: furniture_Cube.006
+    400014: furniture_cupboard_simple.002
+    400016: furniture_cupboard_simple.003
+    400018: furniture_cupboard_simple_02
+    400020: Lamp_B1
+    400022: Lamp_B2
+    400024: Lamp_base
+    400026: Lamp_Bulb
+    400028: Lampholder
+    400030: Lampshade
+    400032: Lampstrings
+    400034: //RootNode
+    400036: prop_postbox
+    400038: smallGuy
+    2300000: bigGuy
+    2300002: Cube
+    2300004: Cube.001
+    2300006: furniture_Cube.000
+    2300008: furniture_Cube.001
+    2300010: furniture_Cube.003
+    2300012: furniture_Cube.006
+    2300014: furniture_cupboard_simple.002
+    2300016: furniture_cupboard_simple.003
+    2300018: furniture_cupboard_simple_02
+    2300020: Lamp_B1
+    2300022: Lamp_B2
+    2300024: Lamp_base
+    2300026: Lamp_Bulb
+    2300028: Lampholder
+    2300030: Lampshade
+    2300032: Lampstrings
+    2300034: prop_postbox
+    2300036: smallGuy
+    2300038: //RootNode
+    3300000: bigGuy
+    3300002: Cube
+    3300004: Cube.001
+    3300006: furniture_Cube.000
+    3300008: furniture_Cube.001
+    3300010: furniture_Cube.003
+    3300012: furniture_Cube.006
+    3300014: furniture_cupboard_simple.002
+    3300016: furniture_cupboard_simple.003
+    3300018: furniture_cupboard_simple_02
+    3300020: Lamp_B1
+    3300022: Lamp_B2
+    3300024: Lamp_base
+    3300026: Lamp_Bulb
+    3300028: Lampholder
+    3300030: Lampshade
+    3300032: Lampstrings
+    3300034: prop_postbox
+    3300036: smallGuy
+    3300038: //RootNode
+    4300000: prop_postbox
+    4300002: Cube.001
+    4300004: Cube
+    4300006: Lamp_base
+    4300008: Lampshade
+    4300010: Lampholder
+    4300012: Lamp_Bulb
+    4300014: Lampstrings
+    4300016: Lamp_B2
+    4300018: Lamp_B1
+    4300020: smallGuy
+    4300022: bigGuy
+    4300024: furniture_cupboard_simple_02
+    4300026: furniture_Cube.001
+    4300028: furniture_Cube.000
+    4300030: furniture_cupboard_simple.003
+    4300032: furniture_cupboard_simple.002
+    4300034: furniture_Cube.006
+    4300036: furniture_Cube.003
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
