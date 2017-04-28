@@ -8,18 +8,23 @@ ModelImporter:
     100000: //RootNode
     100002: Cube.001
     100004: Text
+    100006: Cube.002
     400000: //RootNode
     400002: Cube.001
     400004: Text
+    400006: Cube.002
     2300000: //RootNode
     2300002: Cube.001
     2300004: Text
+    2300006: Cube.002
     3300000: //RootNode
     3300002: Cube.001
     3300004: Text
+    3300006: Cube.002
     4300000: room_startBox
     4300002: Cube.001
     4300004: Text
+    4300006: Cube.002
   materials:
     importMaterials: 1
     materialName: 0

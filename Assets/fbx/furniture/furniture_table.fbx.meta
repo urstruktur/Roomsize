@@ -7,14 +7,20 @@ ModelImporter:
   fileIDToRecycleName:
     100000: furniture_Cube.016
     100002: //RootNode
+    100004: bigTable_cloth
     400000: furniture_Cube.016
     400002: //RootNode
+    400004: bigTable_cloth
     2300000: furniture_Cube.016
     2300002: //RootNode
+    2300004: bigTable_cloth
     3300000: furniture_Cube.016
     3300002: //RootNode
+    3300004: bigTable_cloth
     4300000: furniture_table
     4300002: furniture_Cube.016
+    4300004: furniture_table_big
+    4300006: bigTable_cloth
   materials:
     importMaterials: 1
     materialName: 0

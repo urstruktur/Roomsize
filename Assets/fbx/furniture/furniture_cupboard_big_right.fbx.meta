@@ -9,22 +9,27 @@ ModelImporter:
     100002: furniture_Cube.015
     100004: //RootNode
     100006: furniture_Cylinder.003
+    100008: furniture_cupboard_simple.006
     400000: furniture_Cube.012
     400002: furniture_Cube.015
     400004: //RootNode
     400006: furniture_Cylinder.003
+    400008: furniture_cupboard_simple.006
     2300000: furniture_Cube.012
     2300002: furniture_Cube.015
     2300004: //RootNode
     2300006: furniture_Cylinder.003
+    2300008: furniture_cupboard_simple.006
     3300000: furniture_Cube.012
     3300002: furniture_Cube.015
     3300004: //RootNode
     3300006: furniture_Cylinder.003
+    3300008: furniture_cupboard_simple.006
     4300000: furniture_cupboard_big_right
     4300002: furniture_Cube.012
     4300004: furniture_Cube.015
     4300006: furniture_Cylinder.003
+    4300008: furniture_cupboard_simple.006
   materials:
     importMaterials: 1
     materialName: 0

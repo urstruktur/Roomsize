@@ -8,18 +8,34 @@ ModelImporter:
     100000: furniture_cupboard_top_door
     100002: //RootNode
     100004: furniture_grip
+    100006: furniture_Cube.003
+    100008: furniture_Cube.006
+    100010: furniture_cupboard_simple.002
     400000: furniture_cupboard_top_door
     400002: //RootNode
     400004: furniture_grip
+    400006: furniture_Cube.003
+    400008: furniture_Cube.006
+    400010: furniture_cupboard_simple.002
     2300000: furniture_cupboard_top_door
     2300002: //RootNode
     2300004: furniture_grip
+    2300006: furniture_Cube.003
+    2300008: furniture_Cube.006
+    2300010: furniture_cupboard_simple.002
     3300000: furniture_cupboard_top_door
     3300002: //RootNode
     3300004: furniture_grip
+    3300006: furniture_Cube.003
+    3300008: furniture_Cube.006
+    3300010: furniture_cupboard_simple.002
     4300000: furniture_cupboard_top_simple_02
     4300002: furniture_cupboard_top_door
     4300004: furniture_grip
+    4300006: furniture_cupboard_simple_02
+    4300008: furniture_cupboard_simple.002
+    4300010: furniture_Cube.006
+    4300012: furniture_Cube.003
   materials:
     importMaterials: 1
     materialName: 0

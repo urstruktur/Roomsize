@@ -13,6 +13,7 @@ ModelImporter:
     100010: furniture_Cylinder.002
     100012: furniture_top
     100014: furniture_cupboard_washbasin.001
+    100016: furniture_top.001
     400000: furniture_BezierCurve
     400002: furniture_Cube.010
     400004: furniture_cupboard_washbasin
@@ -21,6 +22,7 @@ ModelImporter:
     400010: furniture_Cylinder.002
     400012: furniture_top
     400014: furniture_cupboard_washbasin.001
+    400016: furniture_top.001
     2300000: furniture_BezierCurve
     2300002: furniture_Cube.010
     2300004: furniture_cupboard_washbasin
@@ -29,6 +31,7 @@ ModelImporter:
     2300010: furniture_Cylinder.002
     2300012: furniture_top
     2300014: furniture_cupboard_washbasin.001
+    2300016: furniture_top.001
     3300000: furniture_BezierCurve
     3300002: furniture_Cube.010
     3300004: furniture_cupboard_washbasin
@@ -37,6 +40,7 @@ ModelImporter:
     3300010: furniture_Cylinder.002
     3300012: furniture_top
     3300014: furniture_cupboard_washbasin.001
+    3300016: furniture_top.001
     4300000: furniture_cupboard_washbasin_02
     4300002: furniture_top
     4300004: furniture_BezierCurve
@@ -45,6 +49,7 @@ ModelImporter:
     4300010: furniture_Cube.010
     4300012: furniture_Cylinder.001
     4300014: furniture_cupboard_washbasin.001
+    4300016: furniture_top.001
   materials:
     importMaterials: 1
     materialName: 0
