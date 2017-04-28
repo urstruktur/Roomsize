@@ -15,6 +15,8 @@ ModelImporter:
     100014: room_curtain_long_cloth_MeshPart1
     100016: room_curtain_long_cloth_MeshPart2
     100018: room_curtain_long_cloth_MeshPart3
+    100020: room_curtain_long_cloth.001_r
+    100022: room_curtain_long_cloth_l
     400000: //RootNode
     400002: room_curtain_long_MeshPart0
     400004: room_curtain_long_MeshPart1
@@ -25,6 +27,8 @@ ModelImporter:
     400014: room_curtain_long_cloth_MeshPart1
     400016: room_curtain_long_cloth_MeshPart2
     400018: room_curtain_long_cloth_MeshPart3
+    400020: room_curtain_long_cloth.001_r
+    400022: room_curtain_long_cloth_l
     2300000: room_curtain_long_MeshPart0
     2300002: room_curtain_long_MeshPart1
     2300004: room_curtain_long_MeshPart2
@@ -34,6 +38,8 @@ ModelImporter:
     2300012: room_curtain_long_cloth_MeshPart1
     2300014: room_curtain_long_cloth_MeshPart2
     2300016: room_curtain_long_cloth_MeshPart3
+    2300018: room_curtain_long_cloth.001_r
+    2300020: room_curtain_long_cloth_l
     3300000: room_curtain_long_MeshPart0
     3300002: room_curtain_long_MeshPart1
     3300004: room_curtain_long_MeshPart2
@@ -43,6 +49,8 @@ ModelImporter:
     3300012: room_curtain_long_cloth_MeshPart1
     3300014: room_curtain_long_cloth_MeshPart2
     3300016: room_curtain_long_cloth_MeshPart3
+    3300018: room_curtain_long_cloth.001_r
+    3300020: room_curtain_long_cloth_l
     4300000: room_curtain_long_MeshPart0
     4300002: room_curtain_long_MeshPart1
     4300004: room_curtain_long_MeshPart2
@@ -52,6 +60,8 @@ ModelImporter:
     4300012: room_curtain_long_cloth_MeshPart1
     4300014: room_curtain_long_cloth_MeshPart2
     4300016: room_curtain_long_cloth_MeshPart3
+    4300018: room_curtain_long_cloth.001_r
+    4300020: room_curtain_long_cloth_l
   materials:
     importMaterials: 1
     materialName: 0

@@ -18,6 +18,8 @@ ModelImporter:
     100020: Cylinder.002
     100022: Plane
     100024: room_wall_window_small
+    100026: Cube.001
+    100028: Plane.001
     400000: //RootNode
     400002: column_l.004
     400004: Cube.008
@@ -31,6 +33,8 @@ ModelImporter:
     400020: Cylinder.002
     400022: Plane
     400024: room_wall_window_small
+    400026: Cube.001
+    400028: Plane.001
     2300000: //RootNode
     2300002: column_l.004
     2300004: Cube.008
@@ -44,6 +48,8 @@ ModelImporter:
     2300020: Cylinder.002
     2300022: Plane
     2300024: room_wall_window_small
+    2300026: Cube.001
+    2300028: Plane.001
     3300000: //RootNode
     3300002: column_l.004
     3300004: Cube.008
@@ -57,6 +63,8 @@ ModelImporter:
     3300020: Cylinder.002
     3300022: Plane
     3300024: room_wall_window_small
+    3300026: Cube.001
+    3300028: Plane.001
     4300000: wall_window_small
     4300002: column_l.004
     4300004: Cube.008
@@ -69,6 +77,8 @@ ModelImporter:
     4300018: Plane
     4300020: BezierCurve
     4300022: BezierCurve.001
+    4300024: Cube.001
+    4300026: Plane.001
   materials:
     importMaterials: 1
     materialName: 0

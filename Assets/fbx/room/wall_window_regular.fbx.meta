@@ -22,6 +22,9 @@ ModelImporter:
     100028: curtainshort_MeshPart3
     100030: Cylinder
     100032: Cylinder.001
+    100034: curtain
+    100036: curtainshort_l
+    100038: curtainshort_r
     400000: //RootNode
     400002: column_l.002
     400004: Cube.001
@@ -39,6 +42,9 @@ ModelImporter:
     400028: curtainshort_MeshPart3
     400030: Cylinder
     400032: Cylinder.001
+    400034: curtain
+    400036: curtainshort_l
+    400038: curtainshort_r
     2300000: //RootNode
     2300002: column_l.002
     2300004: Cube.001
@@ -55,6 +61,9 @@ ModelImporter:
     2300026: curtainshort_MeshPart3
     2300028: Cylinder
     2300030: Cylinder.001
+    2300032: curtain
+    2300034: curtainshort_l
+    2300036: curtainshort_r
     3300000: //RootNode
     3300002: column_l.002
     3300004: Cube.001
@@ -71,6 +80,9 @@ ModelImporter:
     3300026: curtainshort_MeshPart3
     3300028: Cylinder
     3300030: Cylinder.001
+    3300032: curtain
+    3300034: curtainshort_l
+    3300036: curtainshort_r
     4300000: wall_window_regular
     4300002: column_l.002
     4300004: Cube.001
@@ -87,6 +99,9 @@ ModelImporter:
     4300026: curtainshort_MeshPart3
     4300028: Cylinder.001
     4300030: Cylinder
+    4300032: curtain
+    4300034: curtainshort_r
+    4300036: curtainshort_l
   materials:
     importMaterials: 1
     materialName: 0

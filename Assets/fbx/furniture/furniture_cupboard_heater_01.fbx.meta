@@ -21,6 +21,7 @@ ModelImporter:
     100026: cleaningCloth
     100028: Cube.007
     100030: furniture_cupboard_heater_01
+    100032: Plane.004
     400000: furniture_Cube.017
     400002: furniture_Cube.018
     400004: furniture_Cube.019
@@ -37,6 +38,7 @@ ModelImporter:
     400026: cleaningCloth
     400028: Cube.007
     400030: furniture_cupboard_heater_01
+    400032: Plane.004
     2300000: furniture_Cube.017
     2300002: furniture_Cube.018
     2300004: furniture_Cube.019
@@ -52,6 +54,7 @@ ModelImporter:
     2300024: cleaningCloth
     2300026: Cube.007
     2300028: furniture_cupboard_heater_01
+    2300030: Plane.004
     3300000: furniture_Cube.017
     3300002: furniture_Cube.018
     3300004: furniture_Cube.019
@@ -67,6 +70,7 @@ ModelImporter:
     3300024: cleaningCloth
     3300026: Cube.007
     3300028: furniture_cupboard_heater_01
+    3300030: Plane.004
     4300000: furniture_cupboard_heater_01
     4300002: furniture_cupboard_simple_02.003
     4300004: furniture_Cylinder.006
@@ -81,6 +85,7 @@ ModelImporter:
     4300022: furniture_Cube.020
     4300024: cleaningCloth
     4300026: Cube.007
+    4300028: Plane.004
   materials:
     importMaterials: 1
     materialName: 0
