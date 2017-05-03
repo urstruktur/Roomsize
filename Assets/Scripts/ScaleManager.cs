@@ -51,6 +51,13 @@ public class ScaleManager : MonoBehaviour {
             }
         }
 
+        // change light range of copy
+        Light[] lightCopies = rooms[0].GetComponentsInChildren<Light>();
+        foreach(Light lightCopy in lightCopies)
+        {
+            lightCopy.range = lightCopy.range / doorSize;
+        }
+
         Debug.Log(associations.Count + " associations saved.");
     }
 
