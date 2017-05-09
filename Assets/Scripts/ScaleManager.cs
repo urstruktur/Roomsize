@@ -81,8 +81,13 @@ public class ScaleManager : MonoBehaviour {
                 b.transform.hasChanged = false;
             }
         }
-    }
 
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
+            
     // Sets all non-kinematic rigidbodys of children to kinematic rigidbodys and the other way round
     private void InvertKinematic(Transform t)
     {
