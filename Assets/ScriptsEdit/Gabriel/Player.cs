@@ -21,10 +21,6 @@ public class Player : MonoBehaviour {
 	Vector3 position = Vector3.zero;
 	Quaternion rotation = Quaternion.identity;
 
-
-	//Vector3 forward = new Vector3 (0,0,1);
-	//Vector3 upward = new Vector3 (0,1,0);
-
 	Camera _cam;
 	public Camera cam{
 		get {
@@ -55,6 +51,29 @@ public class Player : MonoBehaviour {
 	CursorLockMode cursor = CursorLockMode.Locked;
 
 
+	void FixedUpdate(){
+		DragObject();
+	}
+
+	void DragObject (){
+		if (selectedObj != null) {
+			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
+			rigid.useGravity = false;
+
+			Vector3 pos = selectedObj.transform.position;
+			Vector3 goal = position + rotation * Vector3.forward * space;
+
+			Vector3 dir = (goal - pos).normalized;
+			float dis = Vector3.Distance(goal, pos);
+
+			Debug.DrawLine (position, goal);
+
+			rigid.velocity = dir * dis * 5;
+
+			//rigid.AddForce ( dis * dir);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		position = transform.position;
@@ -68,9 +87,7 @@ public class Player : MonoBehaviour {
 		} else {
 			MarkObject (obj, markedMat);
 		}
-
-
-
+			
 		if (Input.GetMouseButtonDown (0)) {
 			//Debug.Log ("Pressed left click.");
 			GrabObject(obj);
@@ -98,9 +115,7 @@ public class Player : MonoBehaviour {
 			float dir = Input.GetKey (KeyCode.D) ? 1 : -1;
 			transform.position = transform.position + rotation * Vector3.right * dir * movspeed * Time.deltaTime;
 		}
-
-		DragObject();
-
+			
 	}
 
 
@@ -112,7 +127,7 @@ public class Player : MonoBehaviour {
 	GameObject DetectObject(){
 		Vector3 dir = rotation * Vector3.forward;
 
-		RaycastHit[] sphereHit = Physics.SphereCastAll(position, 0.1f, dir, range);
+		RaycastHit[] sphereHit = Physics.SphereCastAll(position, 0.3f, dir, range);
 		List<GameObject> results = new List<GameObject> ();
 
 		for(int i = 0; i < sphereHit.Length; i++){
@@ -138,12 +153,11 @@ public class Player : MonoBehaviour {
 		
 	void MarkObject(GameObject obj, Material mat){
 
+		if (markedObj != null) {
+			markedObj.GetComponent<Renderer>().sharedMaterial = markedObjMat;
+		}
+
 		if (obj != null && mat != null) {
-
-			if (markedObj != null) {
-				markedObj.GetComponent<Renderer>().sharedMaterial = markedObjMat;
-			}
-
 			Renderer render = obj.GetComponent<Renderer>();
 			markedObj = obj;
 			markedObjMat = render.sharedMaterial;
@@ -155,25 +169,6 @@ public class Player : MonoBehaviour {
 	void GrabObject (GameObject obj){
 		//Debug.DrawLine(transform.position, transform.position + rotation * Vector3.forward);
 		selectedObj = obj;
-	}
-
-	void DragObject (){
-		if (selectedObj != null) {
-			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
-			rigid.useGravity = false;
-
-			Vector3 pos = selectedObj.transform.position;
-			Vector3 goal = position + rotation * Vector3.forward * space;
-
-			Vector3 dir = (goal - pos).normalized;
-			float dis = Vector3.Distance(goal, pos);
-
-			Debug.DrawLine (position, goal);
-
-			rigid.velocity = dir * dis * 5;
-
-			//rigid.AddForce ( dis * dir);
-		}
 	}
 
 	void DropObject (){
@@ -207,14 +202,11 @@ public class Player : MonoBehaviour {
 
 		rotation = pitch * yaw * rotation;
 
-
 		Quaternion grav = Quaternion.FromToRotation(new Vector3(0,-1,0), gravity.normalized);
-
 	}
 
-	void FixedUpdate(){
+	void LateUpdate(){
 		cam.transform.position = transform.position;
-		//transform.rotation = rotation;
 		cam.transform.rotation = rotation;
 		//Physics.Raycast
 	}
