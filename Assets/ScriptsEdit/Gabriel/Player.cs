@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+
+
 	public GameObject camObject;
-	float space = 1.6f;
+	public Material selectedMat, markedMat;
+
+	float range = 100; // Grab Range
+	float space = 1.6f; // Distance to Object
+
 	public Vector3 gravity = new Vector3 (0, -1, 0);
 
 
@@ -55,9 +61,19 @@ public class Player : MonoBehaviour {
 
 		CameraMovement();
 
+		GameObject obj = DetectObject();
+
+		if (selectedObj != null) {
+			MarkObject (selectedObj, selectedMat);
+		} else {
+			MarkObject (obj, markedMat);
+		}
+
+
+
 		if (Input.GetMouseButtonDown (0)) {
 			//Debug.Log ("Pressed left click.");
-			GrabObject();
+			GrabObject(obj);
 		}
 
 		if (Input.GetMouseButtonUp (0)) {
@@ -87,16 +103,19 @@ public class Player : MonoBehaviour {
 
 	}
 
-	GameObject selection = null;
 
-	void GrabObject (){
-		//Debug.DrawLine(transform.position, transform.position + rotation * Vector3.forward);
+	GameObject selectedObj = null;
+
+	GameObject markedObj = null;
+	Material markedObjMat = null;
+
+	GameObject DetectObject(){
 		Vector3 dir = rotation * Vector3.forward;
 
-		RaycastHit[] sphereHit = Physics.SphereCastAll(transform.position, 1f, dir, 100);
+		RaycastHit[] sphereHit = Physics.SphereCastAll(position, 0.1f, dir, range);
 		List<GameObject> results = new List<GameObject> ();
 
-		for(int i = 0; i<sphereHit.Length; i++){
+		for(int i = 0; i < sphereHit.Length; i++){
 			GameObject obj = sphereHit[i].collider.gameObject;
 			Rigidbody rigid = obj.GetComponent<Rigidbody> ();
 
@@ -106,21 +125,44 @@ public class Player : MonoBehaviour {
 			}
 		}
 
-		selection = null;
+		GameObject output = null;
 
 		foreach(GameObject obj in results){
-			if (selection == null || Vector3.Distance (position, obj.transform.position) < Vector3.Distance (gameObject.transform.position, selection.transform.position)) {
-				selection = obj;
+			if (output == null || Vector3.Distance (position, obj.transform.position) < Vector3.Distance (gameObject.transform.position, output.transform.position)) {
+				output = obj;
 			}
+		}
+
+		return output;
+	}
+		
+	void MarkObject(GameObject obj, Material mat){
+
+		if (obj != null && mat != null) {
+
+			if (markedObj != null) {
+				markedObj.GetComponent<Renderer>().sharedMaterial = markedObjMat;
+			}
+
+			Renderer render = obj.GetComponent<Renderer>();
+			markedObj = obj;
+			markedObjMat = render.sharedMaterial;
+
+			render.sharedMaterial = mat;
 		}
 	}
 
+	void GrabObject (GameObject obj){
+		//Debug.DrawLine(transform.position, transform.position + rotation * Vector3.forward);
+		selectedObj = obj;
+	}
+
 	void DragObject (){
-		if (selection != null) {
-			Rigidbody rigid = selection.GetComponent<Rigidbody> ();
+		if (selectedObj != null) {
+			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 			rigid.useGravity = false;
 
-			Vector3 pos = selection.transform.position;
+			Vector3 pos = selectedObj.transform.position;
 			Vector3 goal = position + rotation * Vector3.forward * space;
 
 			Vector3 dir = (goal - pos).normalized;
@@ -135,12 +177,12 @@ public class Player : MonoBehaviour {
 	}
 
 	void DropObject (){
-		if (selection != null) {
-			Rigidbody rigid = selection.GetComponent<Rigidbody> ();
+		if (selectedObj != null) {
+			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 			rigid.velocity = Vector3.zero;
 			rigid.useGravity = true;
 
-			selection = null;
+			selectedObj = null;
 		}
 	}
 
