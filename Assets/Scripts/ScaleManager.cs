@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScaleManager : MonoBehaviour {
 
@@ -84,7 +85,7 @@ public class ScaleManager : MonoBehaviour {
 
         if (Input.GetKey("escape"))
         {
-            Application.Quit();
+            SceneManager.LoadScene(0);
         }
     }
             
