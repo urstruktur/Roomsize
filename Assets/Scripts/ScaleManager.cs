@@ -14,6 +14,8 @@ public class ScaleManager : MonoBehaviour {
     public GameObject doorsillSmall;
     public GameObject doorsillBig;
 
+    public GameObject doorsillSmallExit;
+
     [Range(1, 6)]
     public int depth = 2;
 
