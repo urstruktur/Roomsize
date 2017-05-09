@@ -102,6 +102,13 @@ ModelImporter:
     4300032: curtain
     4300034: curtainshort_r
     4300036: curtainshort_l
+    6400000: curtain
+    6400002: curtainshort_l
+    6400004: curtainshort_r
+    6400006: room_column_l.002
+    6400008: room_Cube.001
+    6400010: room_Cube.003
+    6400012: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

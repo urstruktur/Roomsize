@@ -55,6 +55,11 @@ ModelImporter:
     4300014: room_door
     4300016: sign
     4300018: Cube.005
+    6400000: Cube
+    6400002: room_column_l.001
+    6400004: room_Cube
+    6400006: room_door
+    6400008: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

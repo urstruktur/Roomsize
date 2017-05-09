@@ -21,6 +21,8 @@ ModelImporter:
     4300002: column_l
     4300004: room_wall_simple
     4300006: room_column_l
+    6400000: room_column_l
+    6400002: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

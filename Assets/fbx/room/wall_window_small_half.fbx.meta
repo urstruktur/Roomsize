@@ -60,6 +60,16 @@ ModelImporter:
     4300016: BezierCurve.002
     4300018: Plane.002
     4300020: Cube.003
+    6400000: BezierCurve.002
+    6400002: BezierCurve.003
+    6400004: Cube.003
+    6400006: Cylinder.000
+    6400008: Plane.002
+    6400010: Plane.003
+    6400012: room_column_l.007
+    6400014: room_Cube.004
+    6400016: room_Cube.005
+    6400018: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

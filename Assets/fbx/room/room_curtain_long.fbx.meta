@@ -62,6 +62,9 @@ ModelImporter:
     4300016: room_curtain_long_cloth_MeshPart3
     4300018: room_curtain_long_cloth.001_r
     4300020: room_curtain_long_cloth_l
+    6400000: //RootNode
+    6400002: room_curtain_long_cloth.001_r
+    6400004: room_curtain_long_cloth_l
   materials:
     importMaterials: 1
     materialName: 0

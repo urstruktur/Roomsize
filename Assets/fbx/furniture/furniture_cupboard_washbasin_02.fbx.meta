@@ -50,6 +50,14 @@ ModelImporter:
     4300012: furniture_Cylinder.001
     4300014: furniture_cupboard_washbasin.001
     4300016: furniture_top.001
+    6400000: furniture_BezierCurve
+    6400002: furniture_Cube.010
+    6400004: furniture_cupboard_washbasin
+    6400006: //RootNode
+    6400008: furniture_Cylinder.001
+    6400010: furniture_Cylinder.002
+    6400012: furniture_top
+    6400014: furniture_top.001
   materials:
     importMaterials: 1
     materialName: 0
@@ -78,7 +86,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

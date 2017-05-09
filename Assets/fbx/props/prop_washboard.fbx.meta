@@ -20,6 +20,9 @@ ModelImporter:
     4300000: prop_washboard
     4300002: Plane.001
     4300004: Cube.009
+    6400000: Cube.009
+    6400002: Plane.001
+    6400004: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -48,7 +51,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

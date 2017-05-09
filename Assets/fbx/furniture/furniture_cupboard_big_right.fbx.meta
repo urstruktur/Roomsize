@@ -30,6 +30,11 @@ ModelImporter:
     4300004: furniture_Cube.015
     4300006: furniture_Cylinder.003
     4300008: furniture_cupboard_simple.006
+    6400000: furniture_Cube.012
+    6400002: furniture_Cube.015
+    6400004: //RootNode
+    6400006: furniture_cupboard_simple.006
+    6400008: furniture_Cylinder.003
   materials:
     importMaterials: 1
     materialName: 0
@@ -58,7 +63,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

@@ -20,6 +20,9 @@ ModelImporter:
     4300000: room_endBox
     4300002: Cube.011
     4300004: Text.001
+    6400000: Cube.011
+    6400002: //RootNode
+    6400004: Text.001
   materials:
     importMaterials: 1
     materialName: 0

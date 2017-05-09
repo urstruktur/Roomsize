@@ -49,6 +49,14 @@ ModelImporter:
     4300010: Vert
     4300012: furniture_cupboard_big_right.005
     4300014: Text.002
+    6400000: door
+    6400002: furniture_cupboard_big_right.003
+    6400004: furniture_cupboard_big_right.005
+    6400006: furniture_cupboard_big_right.006
+    6400008: //RootNode
+    6400010: Text.002
+    6400012: Vert
+    6400014: Vert.001
   materials:
     importMaterials: 1
     materialName: 0
@@ -77,7 +85,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

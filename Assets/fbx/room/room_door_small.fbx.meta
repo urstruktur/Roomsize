@@ -35,6 +35,8 @@ ModelImporter:
     4300006: room_door.001
     4300008: Cube.003
     4300010: room_Cube.004
+    6400000: room_door.001
+    6400002: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

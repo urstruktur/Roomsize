@@ -40,6 +40,13 @@ ModelImporter:
     4300008: Lampstrings
     4300010: Lamp_B2
     4300012: Lamp_B1
+    6400000: //RootNode
+    6400002: Lamp_B1
+    6400004: Lamp_B2
+    6400006: Lamp_Bulb
+    6400008: Lampholder
+    6400010: Lampshade
+    6400012: Lampstrings
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,7 +75,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

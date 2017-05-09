@@ -86,6 +86,21 @@ ModelImporter:
     4300024: cleaningCloth
     4300026: Cube.007
     4300028: Plane.004
+    6400000: cleaningCloth
+    6400002: Cube.007
+    6400004: furniture_Cube.017
+    6400006: furniture_Cube.018
+    6400008: furniture_Cube.019
+    6400010: furniture_Cube.020
+    6400012: furniture_Cube.021
+    6400014: //RootNode
+    6400016: furniture_cupboard_simple_02.003
+    6400018: furniture_cupboard_simple_02.004
+    6400020: furniture_cupboard_simple_02.005
+    6400022: furniture_Cylinder.005
+    6400024: furniture_Cylinder.006
+    6400026: furniture_Cylinder.008
+    6400028: Plane.004
   materials:
     importMaterials: 1
     materialName: 0
@@ -114,7 +129,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

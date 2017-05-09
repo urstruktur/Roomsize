@@ -25,6 +25,9 @@ ModelImporter:
     4300002: Cube.001
     4300004: Text
     4300006: Cube.002
+    6400000: Cube.002
+    6400002: //RootNode
+    6400004: Text
   materials:
     importMaterials: 1
     materialName: 0
