@@ -70,9 +70,8 @@ public class OnlyGrab : MonoBehaviour {
 			GameObject obj = sphereHit[i].collider.gameObject;
 			Rigidbody rigid = obj.GetComponent<Rigidbody> ();
 
-			if(rigid != null){
+			if(rigid != null && obj.gameObject != this.gameObject){
 				results.Add(obj);
-				//Debug.Log(sphereHit[i].collider.name);
 			}
 		}
 
