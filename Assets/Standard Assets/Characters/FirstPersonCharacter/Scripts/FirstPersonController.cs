@@ -28,6 +28,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+		public bool activeRotation = true;
+
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -236,6 +238,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
+			if(activeRotation)
             m_MouseLook.LookRotation (transform, m_Camera.transform);
         }
 
