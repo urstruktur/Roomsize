@@ -12,13 +12,14 @@ public class DoorOpener : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        Debug.Log("door opening");
 
         foreach(GameObject door in doors)
         {
-            Animation animation = door.GetComponent<Animation>();
-            if (animation != null)
+            Animator animator = door.GetComponent<Animator>();
+            if (animator != null)
             {
-                animation.Play("DoorOpening");
+                animator.SetBool("isOpen", true);
             }
         }
     }
@@ -29,10 +30,10 @@ public class DoorOpener : MonoBehaviour
 
         foreach (GameObject door in doors)
         {
-            Animation animation = door.GetComponent<Animation>();
-            if (animation != null)
+            Animator animator = door.GetComponent<Animator>();
+            if (animator != null)
             {
-                animation.Play("DoorClosing");
+                animator.SetBool("isOpen", false);
             }
         }
     }
