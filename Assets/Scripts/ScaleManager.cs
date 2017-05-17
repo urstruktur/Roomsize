@@ -24,13 +24,12 @@ public class ScaleManager : MonoBehaviour {
     public float doorSize = 0.1f;
 
     private GameObject[] rooms;
-    private Dictionary<Rigidbody, Rigidbody> associations;
+    private Rigidbody[][] associations;
 
     void Start () {
         rooms = new GameObject[depth];
-        associations = new Dictionary<Rigidbody, Rigidbody>();
 
-        // create room copy and set position, scale & rotation correctly
+        // create BIG room copy and set position, scale & rotation correctly
         rooms[0] = new GameObject();
         rooms[0].name = "roomCopy" + 1;
         rooms[0].transform.position = doorsillSmall.transform.position;
@@ -40,18 +39,41 @@ public class ScaleManager : MonoBehaviour {
         rooms[0].transform.localRotation = Quaternion.Inverse(doorsillSmall.transform.rotation);
         InvertKinematic(rooms[0].transform);
 
+        // create SMALL room copy and set position, scale & rotation correctly
+        rooms[1] = new GameObject();
+        rooms[1].name = "roomCopy" + 2;
+        rooms[1].transform.position = doorsillBig.transform.position;
+        Instantiate(initialRoom, rooms[1].transform, true);
+        rooms[1].transform.localScale = new Vector3(doorSize, doorSize, doorSize);
+        rooms[1].transform.position = doorsillSmall.transform.position;
+        rooms[1].transform.localRotation = doorsillSmall.transform.rotation;
+        InvertKinematic(rooms[1].transform);
+
         // save associations
         Rigidbody[] bodiesInitial = initialRoom.GetComponentsInChildren<Rigidbody>();
-        Rigidbody[] bodiesCopy = rooms[0].GetComponentsInChildren<Rigidbody>();
-        foreach (Rigidbody bodyInitial in bodiesInitial)
+        Rigidbody[] bodiesCopyBig = rooms[0].GetComponentsInChildren<Rigidbody>();
+        Rigidbody[] bodiesCopySmall = rooms[1].GetComponentsInChildren<Rigidbody>();
+
+        associations = new Rigidbody[bodiesInitial.Length][];
+
+        for (int i = 0; i < bodiesInitial.Length; i++)
         {
-            foreach (Rigidbody bodyCopy in bodiesCopy)
-            {
-                if(bodyInitial.gameObject.name == bodyCopy.gameObject.name)
+            Rigidbody bigAssociation = null;
+            foreach (Rigidbody bodyCopyBig in bodiesCopyBig) {
+                if (bodiesInitial[i].gameObject.name == bodyCopyBig.gameObject.name)
                 {
-                    associations.Add(bodyInitial, bodyCopy);
+                    bigAssociation = bodyCopyBig;
                 }
             }
+            Rigidbody smallAssociation = null;
+            foreach (Rigidbody bodyCopySmall in bodiesCopySmall)
+            {
+                if (bodiesInitial[i].gameObject.name == bodyCopySmall.gameObject.name)
+                {
+                    smallAssociation = bodyCopySmall;
+                }
+            }
+            associations[i] = new Rigidbody[]{ bodiesInitial[i], bigAssociation, smallAssociation };
         }
 
         // change light range of copy
@@ -61,25 +83,40 @@ public class ScaleManager : MonoBehaviour {
             lightCopy.range = lightCopy.range / doorSize;
         }
 
-        Debug.Log(associations.Count + " associations saved.");
+        // change light range of copy
+        lightCopies = rooms[1].GetComponentsInChildren<Light>();
+        foreach (Light lightCopy in lightCopies)
+        {
+            lightCopy.range = lightCopy.range * doorSize;
+        }
+
+        Debug.Log(associations.Length + " associations saved.");
     }
 
 	void Update () {
-        foreach (KeyValuePair<Rigidbody, Rigidbody> entry in associations)
+        foreach (Rigidbody[] entry in associations)
         {
-            Rigidbody a = entry.Value;
-            Rigidbody b = entry.Key;
+            Rigidbody a = entry[0];
+            Rigidbody b = entry[1];
+            Rigidbody c = entry[2];
 
             if (!a.isKinematic && a.transform.hasChanged)
             {
                 b.transform.localPosition = a.transform.localPosition;
                 b.transform.localRotation = a.transform.localRotation;
                 a.transform.hasChanged = false;
-            }else if(!b.isKinematic && b.transform.hasChanged)
+
+                c.transform.localPosition = a.transform.localPosition;
+                c.transform.localRotation = a.transform.localRotation;
+            }
+            else if(!b.isKinematic && b.transform.hasChanged)
             {
                 a.transform.localPosition = b.transform.localPosition;
                 a.transform.localRotation = b.transform.localRotation;
                 b.transform.hasChanged = false;
+
+                c.transform.localPosition = b.transform.localPosition;
+                c.transform.localRotation = b.transform.localRotation;
             }
         }
 

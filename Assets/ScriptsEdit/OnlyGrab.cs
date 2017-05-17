@@ -92,8 +92,8 @@ public class OnlyGrab : MonoBehaviour {
 			markedObj.GetComponent<Renderer>().sharedMaterial = markedObjMat;
 		}
 
-		if (obj != null && mat != null) {
-			Renderer render = obj.GetComponent<Renderer>();
+        if (obj != null && mat != null && !obj.GetComponent<Rigidbody>().isKinematic) {
+            Renderer render = obj.GetComponent<Renderer>();
 			markedObj = obj;
 			markedObjMat = render.sharedMaterial;
 
