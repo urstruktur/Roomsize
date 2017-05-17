@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrabAndDrag : MonoBehaviour {
 
-	public GameObject selectedObj = null;
+
 
 	public float range = 3;
 
@@ -13,6 +13,22 @@ public class GrabAndDrag : MonoBehaviour {
 	public float radius = 1;
 	public float maxRadius = 2;
 	public float dampRoation = 3.0f;
+
+	public Material selectedMat, markedMat;
+
+	struct Tag{
+		public Renderer render;
+		public Material mat;
+
+		public Tag(Renderer render, Material mat){
+			this.render = render;
+			this.mat = mat;
+		}
+	}
+
+	GameObject selectedObj = null;
+
+	Dictionary<string, List<Tag>> materials = new Dictionary<string, List<Tag>>();
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +50,8 @@ public class GrabAndDrag : MonoBehaviour {
 			detectedObj = DetectObject ();
 		}
 
+
+
 		if (Input.GetMouseButtonDown (0)) {
 			//Debug.Log ("Pressed left click.");
 			if (selectedObj == null) {
@@ -47,7 +65,7 @@ public class GrabAndDrag : MonoBehaviour {
 			UnityStandardAssets.Characters.FirstPerson.FirstPersonController controller = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
 			controller.activeRotation = false;
 		}
-		if (Input.GetMouseButton(1)) {
+		if (Input.GetMouseButton(1) && selectedObj != null) {
 			
 			float adjustX = Input.GetAxis ("Mouse X") * rotationSensitivity;
 			float adjustY = Input.GetAxis ("Mouse Y") * rotationSensitivity;
@@ -71,6 +89,13 @@ public class GrabAndDrag : MonoBehaviour {
 			//Debug.Log ("GO A STEP");
 			step = true;
 		}
+
+		MarkObject ("Mark", detectedObj, markedMat);
+		/*if (selectedObj == null) {
+			
+		} else {
+			MarkObject ("Selected", selectedObj, selectedMat);
+		}*/
 	}
 
 	GameObject DetectObject(){
@@ -101,6 +126,41 @@ public class GrabAndDrag : MonoBehaviour {
 		return output;
 	}
 
+	void MarkObject(string group, GameObject obj, Material mat){
+		
+
+		if (materials.ContainsKey (group)) {
+
+			List<Tag> tags = materials[group];
+
+			if (obj != null && tags[0].render.transform.root == obj.transform) {
+				return;
+			}
+
+			foreach (Tag tag in tags) {
+				tag.render.sharedMaterial = tag.mat;
+			}
+
+			materials.Remove (group);
+		}
+
+		if (obj != null && mat != null) {
+			List<Tag> tags = new List<Tag> ();
+
+			foreach (Transform child in obj.GetComponentsInChildren<Transform>()) {
+
+				Renderer render = child.GetComponent<Renderer> ();
+				if (render != null) {
+					Tag tag = new Tag (render, render.sharedMaterial);
+					tags.Add (tag);
+					render.sharedMaterial = mat;
+				}
+			}
+
+			materials.Add (group, tags);
+		}
+	}
+
 	void GrabObject(GameObject obj){
 		//Debug.DrawLine(transform.position, transform.position + rotation * Vector3.forward);
 		selectedObj = obj;
@@ -119,13 +179,6 @@ public class GrabAndDrag : MonoBehaviour {
 
 			selectedObj = null;
 		}
-	}
-
-	void OnDrawGizmos(){
-		Vector3 origin = Camera.main.transform.position;
-
-		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
-
 	}
 
 	void DragObject(){
@@ -198,5 +251,12 @@ public class GrabAndDrag : MonoBehaviour {
 
 			//rigid.AddForce ( dis * dir);
 		}
+	}
+
+
+	void OnDrawGizmos(){
+		Vector3 origin = Camera.main.transform.position;
+
+		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
 	}
 }
