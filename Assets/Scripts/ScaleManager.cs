@@ -122,7 +122,7 @@ public class ScaleManager : MonoBehaviour {
 
         if (Input.GetKey("escape"))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
             
