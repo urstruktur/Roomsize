@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class ScaleManager : MonoBehaviour {
 
@@ -26,7 +27,22 @@ public class ScaleManager : MonoBehaviour {
     private GameObject[] rooms;
     private Rigidbody[][] associations;
 
-    void Start () {
+    private GameObject player;
+    private FirstPersonController fpc;
+
+    private bool inNormalSize = true;
+
+    void Start() {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if(players.Length >= 1)
+        {
+            player = players[0];
+            fpc = player.GetComponent<FirstPersonController>();
+        }
+        else{
+            Debug.LogError("No GameObject with Player tag!");
+        }
+
         rooms = new GameObject[depth];
 
         // create BIG room copy and set position, scale & rotation correctly
@@ -94,6 +110,29 @@ public class ScaleManager : MonoBehaviour {
     }
 
 	void Update () {
+        // check for active room
+        Vector3 relativePosition = player.transform.position - doorsillBig.transform.position;
+        
+        if(relativePosition.z > 0)
+        {
+            if (!inNormalSize)
+            {
+                Debug.Log("normal size");
+                inNormalSize = true;
+                fpc.m_WalkSpeed = fpc.m_WalkSpeed / 2;
+                InvertActivation();
+            }
+        }
+        else{
+            if (inNormalSize)
+            {
+                Debug.Log("small size");
+                inNormalSize = false;
+                fpc.m_WalkSpeed = fpc.m_WalkSpeed * 2;
+                InvertActivation();
+            }
+        }
+        
         foreach (Rigidbody[] entry in associations)
         {
             Rigidbody a = entry[0];
@@ -120,9 +159,21 @@ public class ScaleManager : MonoBehaviour {
             }
         }
 
-        if (Input.GetKey("escape"))
+        if (Input.GetKey("x"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    private void InvertActivation()
+    {
+        if (rooms[1].activeInHierarchy)
+        {
+            rooms[1].SetActive(false);
+
+        }else
+        {
+            rooms[1].SetActive(true);
         }
     }
             
