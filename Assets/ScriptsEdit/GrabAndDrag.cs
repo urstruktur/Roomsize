@@ -109,7 +109,7 @@ public class GrabAndDrag : MonoBehaviour {
 			GameObject obj = sphereHit[i].collider.gameObject;
 			Rigidbody rigid = obj.GetComponent<Rigidbody> ();
 
-			if(rigid != null && obj.transform.root != gameObject.transform){
+			if(rigid != null && obj.transform.root != gameObject.transform && !rigid.isKinematic){
 				results.Add(obj);
 				//Debug.Log(sphereHit[i].collider.name);
 			}
