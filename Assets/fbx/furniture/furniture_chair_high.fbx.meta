@@ -7,16 +7,52 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: furniture_Cube.025
+    100004: Colliders_02
+    100006: furniture_chair_collider_003_001
+    100008: furniture_chair_collider_004_001
+    100010: furniture_chair_collider_005_001
+    100012: furniture_chair_collider_006_001
+    100014: furniture_chair_collider_007_001
     400000: //RootNode
     400002: furniture_Cube.025
+    400004: Colliders_02
+    400006: furniture_chair_collider_003_001
+    400008: furniture_chair_collider_004_001
+    400010: furniture_chair_collider_005_001
+    400012: furniture_chair_collider_006_001
+    400014: furniture_chair_collider_007_001
     2300000: //RootNode
     2300002: furniture_Cube.025
+    2300004: Colliders_02
+    2300006: furniture_chair_collider_003_001
+    2300008: furniture_chair_collider_004_001
+    2300010: furniture_chair_collider_005_001
+    2300012: furniture_chair_collider_006_001
+    2300014: furniture_chair_collider_007_001
     3300000: //RootNode
     3300002: furniture_Cube.025
+    3300004: Colliders_02
+    3300006: furniture_chair_collider_003_001
+    3300008: furniture_chair_collider_004_001
+    3300010: furniture_chair_collider_005_001
+    3300012: furniture_chair_collider_006_001
+    3300014: furniture_chair_collider_007_001
     4300000: furniture_chair_high
     4300002: furniture_Cube.025
+    4300004: Colliders_02
+    4300006: furniture_chair_collider_005_001
+    4300008: furniture_chair_collider_004_001
+    4300010: furniture_chair_collider_003_001
+    4300012: furniture_chair_collider_006_001
+    4300014: furniture_chair_collider_007_001
     6400000: //RootNode
     6400002: furniture_Cube.025
+    6400004: Colliders_02
+    6400006: furniture_chair_collider_003_001
+    6400008: furniture_chair_collider_004_001
+    6400010: furniture_chair_collider_005_001
+    6400012: furniture_chair_collider_006_001
+    6400014: furniture_chair_collider_007_001
   materials:
     importMaterials: 1
     materialName: 0

@@ -15,6 +15,8 @@ ModelImporter:
     100014: furniture_cupboard_washbasin.001
     100016: furniture_top.001
     100018: Cylinder
+    100020: Cube.009
+    100022: sponge_geo
     400000: furniture_BezierCurve
     400002: furniture_Cube.010
     400004: furniture_cupboard_washbasin
@@ -25,6 +27,8 @@ ModelImporter:
     400014: furniture_cupboard_washbasin.001
     400016: furniture_top.001
     400018: Cylinder
+    400020: Cube.009
+    400022: sponge_geo
     2300000: furniture_BezierCurve
     2300002: furniture_Cube.010
     2300004: furniture_cupboard_washbasin
@@ -35,6 +39,8 @@ ModelImporter:
     2300014: furniture_cupboard_washbasin.001
     2300016: furniture_top.001
     2300018: Cylinder
+    2300020: Cube.009
+    2300022: sponge_geo
     3300000: furniture_BezierCurve
     3300002: furniture_Cube.010
     3300004: furniture_cupboard_washbasin
@@ -45,6 +51,8 @@ ModelImporter:
     3300014: furniture_cupboard_washbasin.001
     3300016: furniture_top.001
     3300018: Cylinder
+    3300020: Cube.009
+    3300022: sponge_geo
     4300000: furniture_cupboard_washbasin_02
     4300002: furniture_top
     4300004: furniture_BezierCurve
@@ -55,6 +63,8 @@ ModelImporter:
     4300014: furniture_cupboard_washbasin.001
     4300016: furniture_top.001
     4300018: Cylinder
+    4300020: Cube.009
+    4300022: sponge_geo
     6400000: furniture_BezierCurve
     6400002: furniture_Cube.010
     6400004: furniture_cupboard_washbasin
@@ -64,6 +74,8 @@ ModelImporter:
     6400012: furniture_top
     6400014: furniture_top.001
     6400016: Cylinder
+    6400018: Cube.009
+    6400020: sponge_geo
   materials:
     importMaterials: 1
     materialName: 0

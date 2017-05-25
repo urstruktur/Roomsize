@@ -7,16 +7,58 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: furniture_Cube.027
+    100004: Colliders
+    100006: furniture_chair_collider_002
+    100008: furniture_chair_collider_003
+    100010: furniture_chair_collider_004
+    100012: furniture_chair_collider_005
+    100014: furniture_chair_collider_006
+    100016: furniture_chair_collider_007
     400000: //RootNode
     400002: furniture_Cube.027
+    400004: Colliders
+    400006: furniture_chair_collider_002
+    400008: furniture_chair_collider_003
+    400010: furniture_chair_collider_004
+    400012: furniture_chair_collider_005
+    400014: furniture_chair_collider_006
+    400016: furniture_chair_collider_007
     2300000: //RootNode
     2300002: furniture_Cube.027
+    2300004: Colliders
+    2300006: furniture_chair_collider_002
+    2300008: furniture_chair_collider_003
+    2300010: furniture_chair_collider_004
+    2300012: furniture_chair_collider_005
+    2300014: furniture_chair_collider_006
+    2300016: furniture_chair_collider_007
     3300000: //RootNode
     3300002: furniture_Cube.027
+    3300004: Colliders
+    3300006: furniture_chair_collider_002
+    3300008: furniture_chair_collider_003
+    3300010: furniture_chair_collider_004
+    3300012: furniture_chair_collider_005
+    3300014: furniture_chair_collider_006
+    3300016: furniture_chair_collider_007
     4300000: furniture_chair_regular_01
     4300002: furniture_Cube.027
+    4300004: Colliders
+    4300006: furniture_chair_collider_002
+    4300008: furniture_chair_collider_003
+    4300010: furniture_chair_collider_004
+    4300012: furniture_chair_collider_005
+    4300014: furniture_chair_collider_006
+    4300016: furniture_chair_collider_007
     6400000: //RootNode
     6400002: furniture_Cube.027
+    6400004: Colliders
+    6400006: furniture_chair_collider_002
+    6400008: furniture_chair_collider_003
+    6400010: furniture_chair_collider_004
+    6400012: furniture_chair_collider_005
+    6400014: furniture_chair_collider_006
+    6400016: furniture_chair_collider_007
   materials:
     importMaterials: 1
     materialName: 0
