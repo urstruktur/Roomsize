@@ -12,6 +12,39 @@ ModelImporter:
     100008: Lampholder
     100010: Lampshade
     100012: Lampstrings
+    100014: bigGuy
+    100016: collider
+    100018: creditCard
+    100020: Cube.002
+    100022: Cube.009
+    100024: Cylinder
+    100026: furniture_Cube.000
+    100028: furniture_Cube.001
+    100030: furniture_Cube.003
+    100032: furniture_Cube.006
+    100034: furniture_cupboard_simple.002
+    100036: furniture_cupboard_simple.003
+    100038: furniture_cupboard_simple_02
+    100040: Lamp_base
+    100042: Plane.001
+    100044: prop_Book0
+    100046: prop_Book1
+    100048: prop_Book2
+    100050: prop_breadboard_big
+    100052: prop_breadboard_long
+    100054: prop_breadboard_mid
+    100056: prop_key
+    100058: prop_postbox
+    100060: prop_sticker_glowing
+    100062: prop_switch_01
+    100064: prop_switch_02
+    100066: prop_Teapot
+    100068: prop_washboard
+    100070: props_pot_01
+    100072: props_pot_02
+    100074: smallGuy
+    100076: Torus
+    100078: Torus.002
     400000: //RootNode
     400002: Lamp_B1
     400004: Lamp_B2
@@ -19,6 +52,39 @@ ModelImporter:
     400008: Lampholder
     400010: Lampshade
     400012: Lampstrings
+    400014: bigGuy
+    400016: collider
+    400018: creditCard
+    400020: Cube.002
+    400022: Cube.009
+    400024: Cylinder
+    400026: furniture_Cube.000
+    400028: furniture_Cube.001
+    400030: furniture_Cube.003
+    400032: furniture_Cube.006
+    400034: furniture_cupboard_simple.002
+    400036: furniture_cupboard_simple.003
+    400038: furniture_cupboard_simple_02
+    400040: Lamp_base
+    400042: Plane.001
+    400044: prop_Book0
+    400046: prop_Book1
+    400048: prop_Book2
+    400050: prop_breadboard_big
+    400052: prop_breadboard_long
+    400054: prop_breadboard_mid
+    400056: prop_key
+    400058: prop_postbox
+    400060: prop_sticker_glowing
+    400062: prop_switch_01
+    400064: prop_switch_02
+    400066: prop_Teapot
+    400068: prop_washboard
+    400070: props_pot_01
+    400072: props_pot_02
+    400074: smallGuy
+    400076: Torus
+    400078: Torus.002
     2300000: //RootNode
     2300002: Lamp_B1
     2300004: Lamp_B2
@@ -26,6 +92,39 @@ ModelImporter:
     2300008: Lampholder
     2300010: Lampshade
     2300012: Lampstrings
+    2300014: bigGuy
+    2300016: collider
+    2300018: creditCard
+    2300020: Cube.002
+    2300022: Cube.009
+    2300024: Cylinder
+    2300026: furniture_Cube.000
+    2300028: furniture_Cube.001
+    2300030: furniture_Cube.003
+    2300032: furniture_Cube.006
+    2300034: furniture_cupboard_simple.002
+    2300036: furniture_cupboard_simple.003
+    2300038: furniture_cupboard_simple_02
+    2300040: Lamp_base
+    2300042: Plane.001
+    2300044: prop_Book0
+    2300046: prop_Book1
+    2300048: prop_Book2
+    2300050: prop_breadboard_big
+    2300052: prop_breadboard_long
+    2300054: prop_breadboard_mid
+    2300056: prop_key
+    2300058: prop_postbox
+    2300060: prop_sticker_glowing
+    2300062: prop_switch_01
+    2300064: prop_switch_02
+    2300066: prop_Teapot
+    2300068: prop_washboard
+    2300070: props_pot_01
+    2300072: props_pot_02
+    2300074: smallGuy
+    2300076: Torus
+    2300078: Torus.002
     3300000: //RootNode
     3300002: Lamp_B1
     3300004: Lamp_B2
@@ -33,6 +132,39 @@ ModelImporter:
     3300008: Lampholder
     3300010: Lampshade
     3300012: Lampstrings
+    3300014: bigGuy
+    3300016: collider
+    3300018: creditCard
+    3300020: Cube.002
+    3300022: Cube.009
+    3300024: Cylinder
+    3300026: furniture_Cube.000
+    3300028: furniture_Cube.001
+    3300030: furniture_Cube.003
+    3300032: furniture_Cube.006
+    3300034: furniture_cupboard_simple.002
+    3300036: furniture_cupboard_simple.003
+    3300038: furniture_cupboard_simple_02
+    3300040: Lamp_base
+    3300042: Plane.001
+    3300044: prop_Book0
+    3300046: prop_Book1
+    3300048: prop_Book2
+    3300050: prop_breadboard_big
+    3300052: prop_breadboard_long
+    3300054: prop_breadboard_mid
+    3300056: prop_key
+    3300058: prop_postbox
+    3300060: prop_sticker_glowing
+    3300062: prop_switch_01
+    3300064: prop_switch_02
+    3300066: prop_Teapot
+    3300068: prop_washboard
+    3300070: props_pot_01
+    3300072: props_pot_02
+    3300074: smallGuy
+    3300076: Torus
+    3300078: Torus.002
     4300000: Lamp_base
     4300002: Lampshade
     4300004: Lampholder
@@ -40,6 +172,38 @@ ModelImporter:
     4300008: Lampstrings
     4300010: Lamp_B2
     4300012: Lamp_B1
+    4300014: props_pot_02
+    4300016: Torus.002
+    4300018: props_pot_01
+    4300020: Torus
+    4300022: prop_Teapot
+    4300024: creditCard
+    4300026: prop_Book2
+    4300028: prop_Book1
+    4300030: prop_Book0
+    4300032: prop_key
+    4300034: prop_switch_02
+    4300036: Cylinder
+    4300038: prop_switch_01
+    4300040: Cube.002
+    4300042: prop_sticker_glowing
+    4300044: prop_washboard
+    4300046: Cube.009
+    4300048: Plane.001
+    4300050: prop_breadboard_long
+    4300052: prop_breadboard_mid
+    4300054: prop_breadboard_big
+    4300056: prop_postbox
+    4300058: collider
+    4300060: smallGuy
+    4300062: bigGuy
+    4300064: furniture_cupboard_simple_02
+    4300066: furniture_Cube.001
+    4300068: furniture_Cube.000
+    4300070: furniture_cupboard_simple.003
+    4300072: furniture_cupboard_simple.002
+    4300074: furniture_Cube.006
+    4300076: furniture_Cube.003
     6400000: //RootNode
     6400002: Lamp_B1
     6400004: Lamp_B2
@@ -75,7 +239,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

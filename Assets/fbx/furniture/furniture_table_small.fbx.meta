@@ -8,18 +8,23 @@ ModelImporter:
     100000: furniture_Cube.000
     100002: //RootNode
     100004: smallTable_cloth
+    100006: Collider
     400000: furniture_Cube.000
     400002: //RootNode
     400004: smallTable_cloth
+    400006: Collider
     2300000: furniture_Cube.000
     2300002: //RootNode
     2300004: smallTable_cloth
+    2300006: Collider
     3300000: furniture_Cube.000
     3300002: //RootNode
     3300004: smallTable_cloth
+    3300006: Collider
     4300000: furniture_table_small
     4300002: smallTable_cloth
     4300004: furniture_Cube.000
+    4300006: Collider
     6400000: furniture_Cube.000
     6400002: //RootNode
     6400004: smallTable_cloth
@@ -51,7 +56,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

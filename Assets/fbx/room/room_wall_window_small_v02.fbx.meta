@@ -15,6 +15,7 @@ ModelImporter:
     100014: room_Cube.009
     100016: room_Cube.010
     100018: //RootNode
+    100020: collider.002
     400000: BezierCurve.004
     400002: BezierCurve.005
     400004: Cube.006
@@ -25,6 +26,7 @@ ModelImporter:
     400014: room_Cube.009
     400016: room_Cube.010
     400018: //RootNode
+    400020: collider.002
     2300000: BezierCurve.004
     2300002: BezierCurve.005
     2300004: Cube.006
@@ -35,6 +37,7 @@ ModelImporter:
     2300014: room_Cube.009
     2300016: room_Cube.010
     2300018: //RootNode
+    2300020: collider.002
     3300000: BezierCurve.004
     3300002: BezierCurve.005
     3300004: Cube.006
@@ -45,6 +48,7 @@ ModelImporter:
     3300014: room_Cube.009
     3300016: room_Cube.010
     3300018: //RootNode
+    3300020: collider.002
     4300000: room_wall_window_small_v02
     4300002: room_column_l.014
     4300004: room_Cube.010
@@ -55,6 +59,7 @@ ModelImporter:
     4300014: BezierCurve.004
     4300016: Plane.005
     4300018: Cube.006
+    4300020: collider.002
   materials:
     importMaterials: 1
     materialName: 0

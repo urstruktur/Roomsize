@@ -13,6 +13,8 @@ ModelImporter:
     100010: furniture_chair_collider_005_001
     100012: furniture_chair_collider_006_001
     100014: furniture_chair_collider_007_001
+    100016: furniture_chair_high_bottom
+    100018: furniture_chair_high_collider
     400000: //RootNode
     400002: furniture_Cube.025
     400004: Colliders_02
@@ -21,6 +23,8 @@ ModelImporter:
     400010: furniture_chair_collider_005_001
     400012: furniture_chair_collider_006_001
     400014: furniture_chair_collider_007_001
+    400016: furniture_chair_high_bottom
+    400018: furniture_chair_high_collider
     2300000: //RootNode
     2300002: furniture_Cube.025
     2300004: Colliders_02
@@ -29,6 +33,8 @@ ModelImporter:
     2300010: furniture_chair_collider_005_001
     2300012: furniture_chair_collider_006_001
     2300014: furniture_chair_collider_007_001
+    2300016: furniture_chair_high_bottom
+    2300018: furniture_chair_high_collider
     3300000: //RootNode
     3300002: furniture_Cube.025
     3300004: Colliders_02
@@ -37,6 +43,8 @@ ModelImporter:
     3300010: furniture_chair_collider_005_001
     3300012: furniture_chair_collider_006_001
     3300014: furniture_chair_collider_007_001
+    3300016: furniture_chair_high_bottom
+    3300018: furniture_chair_high_collider
     4300000: furniture_chair_high
     4300002: furniture_Cube.025
     4300004: Colliders_02
@@ -45,6 +53,8 @@ ModelImporter:
     4300010: furniture_chair_collider_003_001
     4300012: furniture_chair_collider_006_001
     4300014: furniture_chair_collider_007_001
+    4300016: furniture_chair_high_bottom
+    4300018: furniture_chair_high_collider
     6400000: //RootNode
     6400002: furniture_Cube.025
     6400004: Colliders_02
@@ -81,7 +91,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

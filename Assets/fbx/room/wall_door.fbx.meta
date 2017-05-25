@@ -16,6 +16,7 @@ ModelImporter:
     100016: room_Empty.004
     100018: Cube.005
     100020: sign
+    100022: door.001
     400000: column_l.001
     400002: Cube
     400004: door
@@ -27,6 +28,7 @@ ModelImporter:
     400016: room_Empty.004
     400018: Cube.005
     400020: sign
+    400022: door.001
     2300000: column_l.001
     2300002: Cube
     2300004: door

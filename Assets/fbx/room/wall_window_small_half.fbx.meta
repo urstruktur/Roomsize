@@ -16,6 +16,8 @@ ModelImporter:
     100016: room_Cube.004
     100018: room_Cube.005
     100020: //RootNode
+    100022: collider_002
+    100024: Cylinder_000
     400000: BezierCurve.002
     400002: BezierCurve.003
     400004: bool_window_small_02
@@ -27,6 +29,8 @@ ModelImporter:
     400016: room_Cube.004
     400018: room_Cube.005
     400020: //RootNode
+    400022: collider_002
+    400024: Cylinder_000
     2300000: BezierCurve.002
     2300002: BezierCurve.003
     2300004: bool_window_small_02
@@ -38,6 +42,8 @@ ModelImporter:
     2300016: room_Cube.004
     2300018: room_Cube.005
     2300020: //RootNode
+    2300022: collider_002
+    2300024: Cylinder_000
     3300000: BezierCurve.002
     3300002: BezierCurve.003
     3300004: bool_window_small_02
@@ -49,6 +55,8 @@ ModelImporter:
     3300016: room_Cube.004
     3300018: room_Cube.005
     3300020: //RootNode
+    3300022: collider_002
+    3300024: Cylinder_000
     4300000: room_wall_window_small_half
     4300002: room_column_l.007
     4300004: room_Cube.005
@@ -60,6 +68,8 @@ ModelImporter:
     4300016: BezierCurve.002
     4300018: Plane.002
     4300020: Cube.003
+    4300022: collider_002
+    4300024: Cylinder_000
     6400000: BezierCurve.002
     6400002: BezierCurve.003
     6400004: Cube.003

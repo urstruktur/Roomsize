@@ -25,6 +25,9 @@ ModelImporter:
     100034: curtain
     100036: curtainshort_l
     100038: curtainshort_r
+    100040: room_wall_collider_l
+    100042: room_wall_collider_r
+    100044: room_wall_window_collider
     400000: //RootNode
     400002: column_l.002
     400004: Cube.001
@@ -45,6 +48,9 @@ ModelImporter:
     400034: curtain
     400036: curtainshort_l
     400038: curtainshort_r
+    400040: room_wall_collider_l
+    400042: room_wall_collider_r
+    400044: room_wall_window_collider
     2300000: //RootNode
     2300002: column_l.002
     2300004: Cube.001
@@ -64,6 +70,9 @@ ModelImporter:
     2300032: curtain
     2300034: curtainshort_l
     2300036: curtainshort_r
+    2300038: room_wall_collider_l
+    2300040: room_wall_collider_r
+    2300042: room_wall_window_collider
     3300000: //RootNode
     3300002: column_l.002
     3300004: Cube.001
@@ -83,6 +92,9 @@ ModelImporter:
     3300032: curtain
     3300034: curtainshort_l
     3300036: curtainshort_r
+    3300038: room_wall_collider_l
+    3300040: room_wall_collider_r
+    3300042: room_wall_window_collider
     4300000: wall_window_regular
     4300002: column_l.002
     4300004: Cube.001
@@ -102,6 +114,9 @@ ModelImporter:
     4300032: curtain
     4300034: curtainshort_r
     4300036: curtainshort_l
+    4300038: room_wall_window_collider
+    4300040: room_wall_collider_r
+    4300042: room_wall_collider_l
     6400000: curtain
     6400002: curtainshort_l
     6400004: curtainshort_r

@@ -6,10 +6,35 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cube_004
+    100004: door_002
+    100006: room_column_l_011
+    100008: room_Cube_008
+    100010: room_door_002
+    100012: room_Empty.000
     400000: //RootNode
+    400002: Cube_004
+    400004: door_002
+    400006: room_column_l_011
+    400008: room_Cube_008
+    400010: room_door_002
+    400012: room_Empty.000
     2300000: //RootNode
+    2300002: Cube_004
+    2300004: room_column_l_011
+    2300006: room_Cube_008
+    2300008: room_door_002
     3300000: //RootNode
+    3300002: Cube_004
+    3300004: room_column_l_011
+    3300006: room_Cube_008
+    3300008: room_door_002
     4300000: room_wall_door_v02
+    4300002: room_wall_door_002
+    4300004: room_column_l_011
+    4300006: room_Cube_008
+    4300008: room_door_002
+    4300010: Cube_004
   materials:
     importMaterials: 1
     materialName: 0

@@ -14,6 +14,9 @@ ModelImporter:
     100012: furniture_chair_collider_005
     100014: furniture_chair_collider_006
     100016: furniture_chair_collider_007
+    100018: furniture_chair_collider_geo
+    100020: furniture_chair_regular_01.001
+    100022: furniture_chair_regular_01
     400000: //RootNode
     400002: furniture_Cube.027
     400004: Colliders
@@ -23,6 +26,9 @@ ModelImporter:
     400012: furniture_chair_collider_005
     400014: furniture_chair_collider_006
     400016: furniture_chair_collider_007
+    400018: furniture_chair_collider_geo
+    400020: furniture_chair_regular_01.001
+    400022: furniture_chair_regular_01
     2300000: //RootNode
     2300002: furniture_Cube.027
     2300004: Colliders
@@ -32,6 +38,9 @@ ModelImporter:
     2300012: furniture_chair_collider_005
     2300014: furniture_chair_collider_006
     2300016: furniture_chair_collider_007
+    2300018: furniture_chair_collider_geo
+    2300020: furniture_chair_regular_01.001
+    2300022: furniture_chair_regular_01
     3300000: //RootNode
     3300002: furniture_Cube.027
     3300004: Colliders
@@ -41,6 +50,9 @@ ModelImporter:
     3300012: furniture_chair_collider_005
     3300014: furniture_chair_collider_006
     3300016: furniture_chair_collider_007
+    3300018: furniture_chair_collider_geo
+    3300020: furniture_chair_regular_01.001
+    3300022: furniture_chair_regular_01
     4300000: furniture_chair_regular_01
     4300002: furniture_Cube.027
     4300004: Colliders
@@ -50,6 +62,8 @@ ModelImporter:
     4300012: furniture_chair_collider_005
     4300014: furniture_chair_collider_006
     4300016: furniture_chair_collider_007
+    4300018: furniture_chair_regular_01.001
+    4300020: furniture_chair_collider_geo
     6400000: //RootNode
     6400002: furniture_Cube.027
     6400004: Colliders
@@ -87,7 +101,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f59e4079483b27f458badc6ff96af853
-timeCreated: 1492867912
+timeCreated: 1495722819
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -20,6 +20,9 @@ ModelImporter:
     100024: room_wall_window_small
     100026: Cube.001
     100028: Plane.001
+    100030: collider
+    100032: top
+    100034: collider.003
     400000: //RootNode
     400002: column_l.004
     400004: Cube.008
@@ -35,6 +38,9 @@ ModelImporter:
     400024: room_wall_window_small
     400026: Cube.001
     400028: Plane.001
+    400030: collider
+    400032: top
+    400034: collider.003
     2300000: //RootNode
     2300002: column_l.004
     2300004: Cube.008
@@ -50,6 +56,9 @@ ModelImporter:
     2300024: room_wall_window_small
     2300026: Cube.001
     2300028: Plane.001
+    2300030: collider
+    2300032: top
+    2300034: collider.003
     3300000: //RootNode
     3300002: column_l.004
     3300004: Cube.008
@@ -65,6 +74,9 @@ ModelImporter:
     3300024: room_wall_window_small
     3300026: Cube.001
     3300028: Plane.001
+    3300030: collider
+    3300032: top
+    3300034: collider.003
     4300000: wall_window_small
     4300002: column_l.004
     4300004: Cube.008
@@ -79,6 +91,9 @@ ModelImporter:
     4300022: BezierCurve.001
     4300024: Cube.001
     4300026: Plane.001
+    4300028: top
+    4300030: collider
+    4300032: collider.003
     6400000: BezierCurve
     6400002: BezierCurve.001
     6400004: Cube.001
