@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: a9a6b49834e0068499d80bc76f2e4ff0
+timeCreated: 1495820555
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: door.003
+    100002: furniture_cupboard_big_right.007
+    100004: furniture_cupboard_big_right.008
+    100006: furniture_cupboard_big_right.009
+    100008: //RootNode
+    100010: Plane.010
+    100012: postit.005
+    100014: postit.006
+    100016: postit.007
+    100018: postit.008
+    100020: postit.009
+    100022: postit_03.001
+    100024: postit_2.001
+    100026: Text.009
+    100028: Text.010
+    100030: Text.011
+    100032: Text.012
+    100034: Text.013
+    100036: Text.014
+    100038: Vert.004
+    100040: Vert.005
+    400000: door.003
+    400002: furniture_cupboard_big_right.007
+    400004: furniture_cupboard_big_right.008
+    400006: furniture_cupboard_big_right.009
+    400008: //RootNode
+    400010: Plane.010
+    400012: postit.005
+    400014: postit.006
+    400016: postit.007
+    400018: postit.008
+    400020: postit.009
+    400022: postit_03.001
+    400024: postit_2.001
+    400026: Text.009
+    400028: Text.010
+    400030: Text.011
+    400032: Text.012
+    400034: Text.013
+    400036: Text.014
+    400038: Vert.004
+    400040: Vert.005
+    2300000: door.003
+    2300002: furniture_cupboard_big_right.007
+    2300004: furniture_cupboard_big_right.008
+    2300006: furniture_cupboard_big_right.009
+    2300008: //RootNode
+    2300010: Plane.010
+    2300012: postit.005
+    2300014: postit.006
+    2300016: postit.007
+    2300018: postit.008
+    2300020: postit.009
+    2300022: postit_03.001
+    2300024: postit_2.001
+    2300026: Text.009
+    2300028: Text.010
+    2300030: Text.011
+    2300032: Text.012
+    2300034: Text.013
+    2300036: Text.014
+    2300038: Vert.004
+    2300040: Vert.005
+    3300000: door.003
+    3300002: furniture_cupboard_big_right.007
+    3300004: furniture_cupboard_big_right.008
+    3300006: furniture_cupboard_big_right.009
+    3300008: //RootNode
+    3300010: Plane.010
+    3300012: postit.005
+    3300014: postit.006
+    3300016: postit.007
+    3300018: postit.008
+    3300020: postit.009
+    3300022: postit_03.001
+    3300024: postit_2.001
+    3300026: Text.009
+    3300028: Text.010
+    3300030: Text.011
+    3300032: Text.012
+    3300034: Text.013
+    3300036: Text.014
+    3300038: Vert.004
+    3300040: Vert.005
+    4300000: furniture_fridge_menu.001
+    4300002: door.003
+    4300004: postit.009
+    4300006: postit_2.001
+    4300008: postit_03.001
+    4300010: Vert.005
+    4300012: furniture_cupboard_big_right.009
+    4300014: furniture_cupboard_big_right.007
+    4300016: Plane.010
+    4300018: furniture_cupboard_big_right.008
+    4300020: Text.014
+    4300022: postit.008
+    4300024: postit.007
+    4300026: postit.006
+    4300028: postit.005
+    4300030: Text.013
+    4300032: Text.012
+    4300034: Text.011
+    4300036: Text.010
+    4300038: Text.009
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
