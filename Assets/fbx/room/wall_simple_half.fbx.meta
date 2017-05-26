@@ -7,14 +7,60 @@ ModelImporter:
   fileIDToRecycleName:
     100000: room_column_l.006
     100002: //RootNode
+    100004: BezierCurve.002
+    100006: BezierCurve.003
+    100008: collider_002
+    100010: Cube.003
+    100012: Cylinder_000
+    100014: Plane.002
+    100016: Plane.003
+    100018: room_Cube.004
+    100020: room_Cube.005
     400000: room_column_l.006
     400002: //RootNode
+    400004: BezierCurve.002
+    400006: BezierCurve.003
+    400008: collider_002
+    400010: Cube.003
+    400012: Cylinder_000
+    400014: Plane.002
+    400016: Plane.003
+    400018: room_Cube.004
+    400020: room_Cube.005
     2300000: room_column_l.006
     2300002: //RootNode
+    2300004: BezierCurve.002
+    2300006: BezierCurve.003
+    2300008: collider_002
+    2300010: Cube.003
+    2300012: Cylinder_000
+    2300014: Plane.002
+    2300016: Plane.003
+    2300018: room_Cube.004
+    2300020: room_Cube.005
     3300000: room_column_l.006
     3300002: //RootNode
+    3300004: BezierCurve.002
+    3300006: BezierCurve.003
+    3300008: collider_002
+    3300010: Cube.003
+    3300012: Cylinder_000
+    3300014: Plane.002
+    3300016: Plane.003
+    3300018: room_Cube.004
+    3300020: room_Cube.005
     4300000: room_wall_simple_half
     4300002: room_column_l.006
+    4300004: room_wall_window_small_half
+    4300006: collider_002
+    4300008: room_Cube.005
+    4300010: room_Cube.004
+    4300012: Cylinder_000
+    4300014: BezierCurve.003
+    4300016: Plane.003
+    4300018: BezierCurve.002
+    4300020: Plane.002
+    4300022: Cube.003
     6400000: room_column_l.006
     6400002: //RootNode
   materials:

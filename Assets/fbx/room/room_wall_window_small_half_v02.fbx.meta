@@ -60,6 +60,7 @@ ModelImporter:
     4300016: room_Cube.011
     4300018: room_column_l.015
     4300020: collider_002.001
+    4300022: room_wall_simple_half_v02
   materials:
     importMaterials: 1
     materialName: 0

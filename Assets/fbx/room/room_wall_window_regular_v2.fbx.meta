@@ -6,10 +6,96 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: curtain.001
+    100004: curtainshort_l.001
+    100006: curtainshort_r.001
+    100008: room_Cube.006
+    100010: room_Cube.007
+    100012: room_wall_collider_l.001
+    100014: room_wall_collider_r.001
+    100016: room_wall_window_collider.001
+    100018: BezierCurve.004
+    100020: BezierCurve.005
+    100022: collider.002
+    100024: Cube.006
+    100026: Cylinder.003
+    100028: Plane.005
+    100030: Plane.006
+    100032: room_Cube.009
+    100034: room_Cube.010
     400000: //RootNode
+    400002: curtain.001
+    400004: curtainshort_l.001
+    400006: curtainshort_r.001
+    400008: room_Cube.006
+    400010: room_Cube.007
+    400012: room_wall_collider_l.001
+    400014: room_wall_collider_r.001
+    400016: room_wall_window_collider.001
+    400018: BezierCurve.004
+    400020: BezierCurve.005
+    400022: collider.002
+    400024: Cube.006
+    400026: Cylinder.003
+    400028: Plane.005
+    400030: Plane.006
+    400032: room_Cube.009
+    400034: room_Cube.010
     2300000: //RootNode
+    2300002: curtain.001
+    2300004: curtainshort_l.001
+    2300006: curtainshort_r.001
+    2300008: room_Cube.006
+    2300010: room_Cube.007
+    2300012: room_wall_collider_l.001
+    2300014: room_wall_collider_r.001
+    2300016: room_wall_window_collider.001
+    2300018: BezierCurve.004
+    2300020: BezierCurve.005
+    2300022: collider.002
+    2300024: Cube.006
+    2300026: Cylinder.003
+    2300028: Plane.005
+    2300030: Plane.006
+    2300032: room_Cube.009
+    2300034: room_Cube.010
     3300000: //RootNode
+    3300002: curtain.001
+    3300004: curtainshort_l.001
+    3300006: curtainshort_r.001
+    3300008: room_Cube.006
+    3300010: room_Cube.007
+    3300012: room_wall_collider_l.001
+    3300014: room_wall_collider_r.001
+    3300016: room_wall_window_collider.001
+    3300018: BezierCurve.004
+    3300020: BezierCurve.005
+    3300022: collider.002
+    3300024: Cube.006
+    3300026: Cylinder.003
+    3300028: Plane.005
+    3300030: Plane.006
+    3300032: room_Cube.009
+    3300034: room_Cube.010
     4300000: room_wall_window_regular_v2
+    4300002: curtain.001
+    4300004: room_wall_window_collider.001
+    4300006: curtainshort_l.001
+    4300008: room_wall_collider_l.001
+    4300010: curtainshort_r.001
+    4300012: room_wall_collider_r.001
+    4300014: room_Cube.007
+    4300016: room_Cube.006
+    4300018: room_wall_window_small_v02
+    4300020: collider.002
+    4300022: room_Cube.010
+    4300024: room_Cube.009
+    4300026: Cylinder.003
+    4300028: BezierCurve.005
+    4300030: Plane.006
+    4300032: BezierCurve.004
+    4300034: Plane.005
+    4300036: Cube.006
   materials:
     importMaterials: 1
     materialName: 0
