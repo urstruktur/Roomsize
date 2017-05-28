@@ -7,7 +7,12 @@ public class DoorOpener : MonoBehaviour
 {
     [Header("Use \"Door\" tag to animate doors on trigger enter.")]
 
-    public GameObject player;
+    private GameObject player;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,6 +25,7 @@ public class DoorOpener : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("isOpen", true);
+                Debug.Log("door opening");
             }
         }
     }
