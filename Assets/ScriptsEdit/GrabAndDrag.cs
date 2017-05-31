@@ -100,12 +100,23 @@ public class GrabAndDrag : MonoBehaviour {
 		List<GameObject> results = new List<GameObject> ();
 
 		for(int i = 0; i < sphereHit.Length; i++){
-			GameObject obj = sphereHit[i].collider.transform.root.gameObject;
-			Rigidbody rigid = obj.GetComponent<Rigidbody> ();
 
-			if(rigid != null && obj.transform.root != gameObject.transform && !rigid.isKinematic){
-				results.Add(obj);
+			Transform root = sphereHit [i].collider.transform;
 
+			//GameObject obj = sphereHit[i].collider.transform.root.gameObject;
+
+			while (true) {
+				if (root.GetComponent<Rigidbody>() != null) {
+					break;
+				} else {
+					root = root.parent;
+				}
+			}
+
+			//Debug.Log (obj.name);
+
+			if(root != gameObject && !root.GetComponent<Rigidbody>().isKinematic){
+				results.Add(root.gameObject);
 			}
 		}
 
