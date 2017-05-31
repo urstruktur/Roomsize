@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GrabAndDrag : MonoBehaviour {
 
-
-
 	public float range = 3;
 
 	public float rotationSensitivity = 1;
@@ -16,6 +14,20 @@ public class GrabAndDrag : MonoBehaviour {
 
 	public Material selectedMat, markedMat;
 
+	GameObject selectedObj = null;
+
+	Vector3 _center = Vector3.zero;
+	Vector3 center {
+		get{
+			return  selectedObj.transform.position + /*selectedObj.transform.rotation **/ _center;
+		}
+		set{
+			_center = value;
+		}
+	}
+
+
+	Dictionary<string, List<Tag>> materials = new Dictionary<string, List<Tag>>();
 	struct Tag{
 		public Renderer render;
 		public Material mat;
@@ -26,22 +38,9 @@ public class GrabAndDrag : MonoBehaviour {
 		}
 	}
 
-	GameObject selectedObj = null;
-
-	Dictionary<string, List<Tag>> materials = new Dictionary<string, List<Tag>>();
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-
 	void FixedUpdate () {
 		DragObject ();
-
 	}
-
-	// Update is called once per frame
-	bool step = false;
 
 	void Update () {
 
@@ -49,11 +48,9 @@ public class GrabAndDrag : MonoBehaviour {
 		if (selectedObj == null) {
 			detectedObj = DetectObject ();
 		}
-
-
-
+			
 		if (Input.GetMouseButtonDown (0)) {
-			//Debug.Log ("Pressed left click.");
+
 			if (selectedObj == null) {
 				GrabObject (detectedObj);
 			} else {
@@ -76,18 +73,15 @@ public class GrabAndDrag : MonoBehaviour {
 			Quaternion yaw = Quaternion.AngleAxis (adjustX, new Vector3(0,1,0)); //HORIZONTAL
 			Quaternion pitch = Quaternion.AngleAxis (adjustY, new Vector3(1,0,0)); //VERTICAL
 
-			//Debug.DrawLine (transform.position, transform.position +  horiz * new Vector3(1,0,0) *1.4f, Color.white);
+			// yaw *
+			Quaternion rotation = pitch * selectedObj.transform.rotation;
 
-			selectedObj.transform.rotation = pitch * yaw * selectedObj.transform.rotation;
+			selectedObj.transform.rotation = rotation;
+			//selectedObj.transform.position -= rotation * center;
 		}
 		if (Input.GetMouseButtonUp (1)) {
 			UnityStandardAssets.Characters.FirstPerson.FirstPersonController controller = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
 			controller.activeRotation = true;
-		}
-
-		if (Input.GetKeyDown (KeyCode.Q)) {
-			//Debug.Log ("GO A STEP");
-			step = true;
 		}
 
 		MarkObject ("Mark", detectedObj, markedMat);
@@ -106,12 +100,12 @@ public class GrabAndDrag : MonoBehaviour {
 		List<GameObject> results = new List<GameObject> ();
 
 		for(int i = 0; i < sphereHit.Length; i++){
-			GameObject obj = sphereHit[i].collider.gameObject;
+			GameObject obj = sphereHit[i].collider.transform.root.gameObject;
 			Rigidbody rigid = obj.GetComponent<Rigidbody> ();
 
 			if(rigid != null && obj.transform.root != gameObject.transform && !rigid.isKinematic){
 				results.Add(obj);
-				//Debug.Log(sphereHit[i].collider.name);
+
 			}
 		}
 
@@ -126,46 +120,12 @@ public class GrabAndDrag : MonoBehaviour {
 		return output;
 	}
 
-	void MarkObject(string group, GameObject obj, Material mat){
-		
-
-		if (materials.ContainsKey (group)) {
-
-			List<Tag> tags = materials[group];
-
-			if (obj != null && tags[0].render.transform.root == obj.transform) {
-				return;
-			}
-
-			foreach (Tag tag in tags) {
-				tag.render.sharedMaterial = tag.mat;
-			}
-
-			materials.Remove (group);
-		}
-
-		if (obj != null && mat != null) {
-			List<Tag> tags = new List<Tag> ();
-
-			foreach (Transform child in obj.GetComponentsInChildren<Transform>()) {
-
-				Renderer render = child.GetComponent<Renderer> ();
-				if (render != null) {
-					Tag tag = new Tag (render, render.sharedMaterial);
-					tags.Add (tag);
-					render.sharedMaterial = mat;
-				}
-			}
-
-			materials.Add (group, tags);
-		}
-	}
-
 	void GrabObject(GameObject obj){
-		//Debug.DrawLine(transform.position, transform.position + rotation * Vector3.forward);
 		selectedObj = obj;
 
 		if (selectedObj != null) {
+			center = CenterObject(selectedObj);
+
 			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 			rigid.useGravity = false;
 		}
@@ -191,10 +151,7 @@ public class GrabAndDrag : MonoBehaviour {
 			Vector3 forward = Camera.main.transform.forward;
 			Vector3 upward = Camera.main.transform.up;
 
-			Vector3 pos = selectedObj.transform.position;
-			//Vector3 goal = origin + forward;
-
-			//Vector3 dir = (goal - pos).normalized;
+			Vector3 pos = center;
 
 
 			Vector3 axis_forward = Vector3.Cross (Vector3.up, Vector3.Cross (forward, Vector3.up)).normalized;
@@ -209,36 +166,16 @@ public class GrabAndDrag : MonoBehaviour {
 			if (goal.x != goal.x) {
 				goal = origin + forward * maxRadius;
 			}
-
-
-			//Vector3 goal = forward  * Vector3.Dot (forward, axis_forward * radius);
-
-			//Debug.Log (axis_forward);
-
-			//float dis = Vector3.Distance(goal, pos);
-
-			Debug.DrawLine (origin, origin + forward, new Color(1,0,0,0.6f));
-			Debug.DrawLine (origin, origin + axis_forward * radius, new Color(0,0,1,0.6f));
-
-			//Debug.DrawLine (origin, pos, new Color(1,1,1,0.6f));
-
-			Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
+				
+			//Debug.DrawLine (origin, origin + forward, new Color(1,0,0,0.6f));
+			//Debug.DrawLine (origin, origin + axis_forward * radius, new Color(0,0,1,0.6f));
+			//Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
 
 			//Vector3 goal
-
 			rigid.velocity = (goal - pos).normalized * Vector3.Distance(pos, goal) / Time.fixedDeltaTime;
 
-			if (step || true) {
-				//rigid.velocity = f * dis * 5;
 
-				//step = false;
-			} else {
-				//rigid.velocity = Vector3.zero;
-			}
-
-
-			//Debug.Log ("#" + rigid.angularVelocity.magnitude + " ");
-
+			//ROTATION
 			if (rigid.angularVelocity.magnitude >= 0.01f) {
 				float value = ( 1/ rigid.angularVelocity.magnitude) * (dampRoation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
 				rigid.angularVelocity -= rigid.angularVelocity * rigid.angularVelocity.magnitude * value * Time.fixedDeltaTime;
@@ -254,9 +191,96 @@ public class GrabAndDrag : MonoBehaviour {
 	}
 
 
+	void MarkObject(string group, GameObject obj, Material mat){
+
+		if (materials.ContainsKey (group)) {
+
+			List<Tag> tags = materials[group];
+
+			if (obj != null && tags[0].render.transform.root == obj.transform) {
+				return;
+			}
+			foreach (Tag tag in tags) {
+				tag.render.sharedMaterial = tag.mat;
+			}
+			materials.Remove (group);
+		}
+
+		if (obj != null && mat != null) {
+			List<Tag> tags = new List<Tag> ();
+
+			foreach (Transform child in obj.GetComponentsInChildren<Transform>()) {
+				Renderer render = child.GetComponent<Renderer> ();
+				if (render != null) {
+					Tag tag = new Tag (render, render.sharedMaterial);
+					tags.Add (tag);
+					render.sharedMaterial = mat;
+				}
+			}
+			materials.Add (group, tags);
+		}
+	}
+
+
 	void OnDrawGizmos(){
 		Vector3 origin = Camera.main.transform.position;
 
+		Debug.DrawLine (origin, origin + Camera.main.transform.forward * range, Color.red);
+
 		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
+
+		if(selectedObj != null){
+			CalculateBounds (selectedObj);
+
+			UnityEditor.Handles.color = new Color (1, 1, 0, 0.5f);
+			UnityEditor.Handles.DrawWireCube (center, Vector3.one * 0.2f);
+		}
+	}
+
+	Vector3 CenterObject(GameObject obj){
+
+		Bounds bounds = obj.transform.GetComponent<Renderer>().bounds;
+
+		Renderer[] renders = obj.GetComponentsInChildren<Renderer> ();
+		foreach (Renderer render in renders){
+			if (render.gameObject.activeSelf != true)
+				continue;
+
+			bounds.Encapsulate (render.bounds.min);
+			bounds.Encapsulate (render.bounds.max);
+		}
+
+		return bounds.center - obj.transform.position;
+	}
+
+
+	//FLUFF
+
+	private void CalculateBounds(GameObject obj){
+
+		Bounds bounds = obj.transform.GetComponent<Renderer>().bounds;
+
+		//UnityEditor.Handles.matrix = obj.transform.localToWorldMatrix;//Matrix4x4.TRS(Vector3.zero, obj.transform.rotation, Vector3.one);
+		UnityEditor.Handles.color = new Color (1, 0, 0, 0.5f);
+		UnityEditor.Handles.DrawWireCube (bounds.center, bounds.size);
+
+		Renderer[] renders = obj.GetComponentsInChildren<Renderer> ();
+		foreach (Renderer render in renders){
+			if (render.gameObject.activeSelf != true)
+				continue;
+			UnityEditor.Handles.DrawWireCube (render.bounds.center, render.bounds.size);
+
+			bounds.Encapsulate (render.bounds.min);
+			bounds.Encapsulate (render.bounds.max);
+		}
+
+		UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
+		UnityEditor.Handles.DrawWireCube (bounds.center, bounds.size);
+	}
+
+	public void rotateRigidBodyAroundPointBy(Rigidbody rb, Vector3 origin, Vector3 axis, float angle){
+		Quaternion q = Quaternion.AngleAxis(angle, axis);
+		rb.MovePosition(q * (rb.transform.position - origin) + origin);
+		rb.MoveRotation(rb.transform.rotation * q);
 	}
 }
