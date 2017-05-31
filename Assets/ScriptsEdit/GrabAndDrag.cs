@@ -105,8 +105,9 @@ public class GrabAndDrag : MonoBehaviour {
 
 			//GameObject obj = sphereHit[i].collider.transform.root.gameObject;
 
+			bool valid = true;
 			while (true) {
-				if (root.GetComponent<Rigidbody>() != null) {
+				if (root.GetComponent<Rigidbody>() != null || root.parent == null) {
 					break;
 				} else {
 					root = root.parent;
@@ -114,8 +115,9 @@ public class GrabAndDrag : MonoBehaviour {
 			}
 
 			//Debug.Log (obj.name);
+			Rigidbody rigid = root.GetComponent<Rigidbody>();
 
-			if(root != gameObject && !root.GetComponent<Rigidbody>().isKinematic){
+			if(root != gameObject && rigid != null && !rigid.isKinematic){
 				results.Add(root.gameObject);
 			}
 		}
