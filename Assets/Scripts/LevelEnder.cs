@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -8,25 +9,32 @@ public class LevelEnder : MonoBehaviour {
 
     public GameObject setActiveOnTrigger;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter(Collider other)
     {
-        if(gameObject.transform.lossyScale.magnitude >= 0.5)
+        if(!ScaleManager.inNormalSize)
         {
-            Debug.Log("finish");
-            if (collider.gameObject.GetComponent<FirstPersonController>() != null)
+            if (other.tag == "Player")
             {
-                setActiveOnTrigger.SetActive(true);
+                Invoke("LoadNextLevel", 3);
+                Debug.Log("finished level");
+                
+                if (SceneManager.GetActiveScene().buildIndex+1 < SceneManager.sceneCountInBuildSettings)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+                else
+                {
+                    setActiveOnTrigger.SetActive(true);
+                }
             }
+        }else
+        {
+            Debug.Log("not finished level");
         }
+    }
+
+    void LoadNextLeve()
+    {
+
     }
 }
