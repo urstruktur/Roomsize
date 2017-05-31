@@ -38,7 +38,7 @@ public class ScaleManager : MonoBehaviour {
     private GameObject player;
     private FirstPersonController fpc;
 
-    private bool inNormalSize = true;
+    static public bool inNormalSize = true;
 
     void Start() {
         // find player, set variable

@@ -6,7 +6,7 @@ public class ForceField : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             Vector3 force = this.transform.position - other.transform.position;
             force.Normalize();
