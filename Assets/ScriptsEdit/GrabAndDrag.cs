@@ -186,7 +186,7 @@ public class GrabAndDrag : MonoBehaviour {
 
 			//Vector3 goal
 			rigid.velocity = (goal - pos).normalized * Vector3.Distance(pos, goal) / Time.fixedDeltaTime;
-
+            rigid.velocity *= 0.3f;
 
 			//ROTATION
 			if (rigid.angularVelocity.magnitude >= 0.01f) {
