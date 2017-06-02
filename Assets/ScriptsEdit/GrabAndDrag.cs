@@ -15,14 +15,18 @@ public class GrabAndDrag : MonoBehaviour {
 	public Material selectedMat, markedMat;
 
 	GameObject selectedObj = null;
+	Boundary boundary = null;
 
-	Vector3 _center = Vector3.zero;
-	Vector3 center {
+	public Vector3 center{
 		get{
-			return  selectedObj.transform.position + /*selectedObj.transform.rotation **/ _center;
-		}
-		set{
-			_center = value;
+			if (boundary == null) {
+				return new Vector3 (float.NaN, float.NaN, float.NaN);
+			}
+
+			// selectedObj.transform.position + selectedObj.transform.rotation * 
+			Matrix4x4 localToWorldMatrix = selectedObj.transform.localToWorldMatrix;
+			Vector3 center = localToWorldMatrix.MultiplyPoint3x4(boundary.center);
+			return center;
 		}
 	}
 
@@ -92,20 +96,24 @@ public class GrabAndDrag : MonoBehaviour {
 		}*/
 	}
 
+	public static Vector3 DistanceToLine(Ray ray, Vector3 point){
+		return Vector3.Cross(ray.direction, point - ray.origin);
+	}
+
 	GameObject DetectObject(){
 		Vector3 forward = Camera.main.transform.forward;
 		Vector3 origin = Camera.main.transform.position;
 
 		RaycastHit[] sphereHit = Physics.SphereCastAll(origin, 0.3f, forward, range);
-		List<GameObject> results = new List<GameObject> ();
+		//List<GameObject> results = new List<GameObject> ();
+
+		float best = -1;
+		GameObject result = null;
 
 		for(int i = 0; i < sphereHit.Length; i++){
 
 			Transform root = sphereHit [i].collider.transform;
 
-			//GameObject obj = sphereHit[i].collider.transform.root.gameObject;
-
-			bool valid = true;
 			while (true) {
 				if (root.GetComponent<Rigidbody>() != null || root.parent == null) {
 					break;
@@ -114,30 +122,51 @@ public class GrabAndDrag : MonoBehaviour {
 				}
 			}
 
-			//Debug.Log (obj.name);
 			Rigidbody rigid = root.GetComponent<Rigidbody>();
 
-			if(root != gameObject && rigid != null && !rigid.isKinematic){
-				results.Add(root.gameObject);
+			if(root == gameObject || rigid == null || rigid.isKinematic){
+				continue;
 			}
+				
+			Ray ray = new Ray (origin, forward);
+
+			Vector3 point = NearestPointOnLine(origin, forward, sphereHit [i].point);
+
+			Vector3 ping = sphereHit [i].collider.ClosestPoint (point);
+			point = NearestPointOnLine(origin, forward, ping);
+
+
+			float distance = Mathf.Pow( Vector3.Distance (origin, point), 0.3f) + Mathf.Pow( Vector3.Distance (sphereHit [i].point, point),1);
+
+			if(best == -1 || distance < best){
+				result = root.gameObject;
+				best = distance;
+			}
+				
+			Debug.DrawLine (ray.origin, ping, new Color (1, 1, 0, 0.1f));
+			Debug.DrawLine (point, ping, new Color (0, 1, 0, 0.5f));
+
 		}
 
-		GameObject output = null;
+		return result;
+	}
 
-		foreach(GameObject obj in results){
-			if (output == null || Vector3.Distance (origin, obj.transform.position) < Vector3.Distance (gameObject.transform.position, output.transform.position)) {
-				output = obj;
-			}
-		}
-
-		return output;
+	public static Vector3 NearestPointOnLine(Vector3 origin, Vector3 direction, Vector3 point)
+	{
+		direction.Normalize();//this needs to be a unit vector
+		Vector3 v = point - origin;
+		float d = Vector3.Dot(v, direction);
+		return  origin + direction * d;
 	}
 
 	void GrabObject(GameObject obj){
 		selectedObj = obj;
 
 		if (selectedObj != null) {
-			center = CenterObject(selectedObj);
+
+			boundary = new Boundary (selectedObj);
+
+			//center = CenterObject(selectedObj);
 
 			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 			rigid.useGravity = false;
@@ -155,52 +184,55 @@ public class GrabAndDrag : MonoBehaviour {
 	}
 
 	void DragObject(){
-		if (selectedObj != null) {
-			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
-			rigid.useGravity = false;
 
-			Vector3 origin = Camera.main.transform.position;
-
-			Vector3 forward = Camera.main.transform.forward;
-			Vector3 upward = Camera.main.transform.up;
-
-			Vector3 pos = center;
-
-
-			Vector3 axis_forward = Vector3.Cross (Vector3.up, Vector3.Cross (forward, Vector3.up)).normalized;
-			if (axis_forward.magnitude == 0) {
-				axis_forward =  Vector3.Cross (Vector3.up, Vector3.Cross (upward, Vector3.up)).normalized;
-			}
-
-			float distance = (axis_forward * radius).magnitude/Vector3.Project (forward, (axis_forward * radius)).magnitude;;
-
-			distance = Mathf.Min (distance, maxRadius);
-			Vector3 goal = origin + forward * distance;
-			if (goal.x != goal.x) {
-				goal = origin + forward * maxRadius;
-			}
-				
-			//Debug.DrawLine (origin, origin + forward, new Color(1,0,0,0.6f));
-			//Debug.DrawLine (origin, origin + axis_forward * radius, new Color(0,0,1,0.6f));
-			//Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
-
-			//Vector3 goal
-			rigid.velocity = (goal - pos).normalized * Vector3.Distance(pos, goal) / Time.fixedDeltaTime;
-
-
-			//ROTATION
-			if (rigid.angularVelocity.magnitude >= 0.01f) {
-				float value = ( 1/ rigid.angularVelocity.magnitude) * (dampRoation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
-				rigid.angularVelocity -= rigid.angularVelocity * rigid.angularVelocity.magnitude * value * Time.fixedDeltaTime;
-			} else {
-				rigid.angularVelocity = Vector3.zero;
-			}
-
-			//Vector3 localAngularVelocity = transform.InverseTransformDirection(rigid.angularVelocity);
-			//rigid.AddRelativeTorque(-localAngularVelocity * slowDownPower * Time.fixedDeltaTime);
-
-			//rigid.AddForce ( dis * dir);
+		if (selectedObj == null) {
+			return;
 		}
+
+		Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
+		rigid.useGravity = false;
+
+		Vector3 origin = Camera.main.transform.position;
+
+		Vector3 forward = Camera.main.transform.forward;
+		Vector3 upward = Camera.main.transform.up; // center;
+
+		//INCREASE LENGTH
+		Vector3 axis_forward =  Vector3.Cross (Vector3.up, Vector3.Cross (forward, Vector3.up)).normalized;
+		axis_forward = axis_forward.magnitude == 0 ? axis_forward : Vector3.Cross (Vector3.up, Vector3.Cross (upward, Vector3.up)).normalized;
+		float distance =  Mathf.Min (radius / Vector3.Project(forward, (axis_forward * radius)).magnitude , maxRadius);
+
+
+		Debug.DrawLine (origin, origin + forward * distance, new Color(1,1,0,0.6f));
+
+		Vector3 goal = origin + forward * distance;
+
+		Debug.DrawLine (center, goal, new Color(0,1,0,1f));
+
+		/*if (goal.x != goal.x) {
+			goal = origin + forward * maxRadius;
+		}*/
+
+		//Debug.DrawLine (origin, origin + forward, new Color(1,0,0,0.6f));
+		//Debug.DrawLine (origin, origin + axis_forward * radius, new Color(0,0,1,0.6f));
+		//Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
+
+		//Vector3 goal
+		//rigid.velocity = (goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime;
+
+
+		//ROTATION
+		/*if (rigid.angularVelocity.magnitude >= 0.01f) {
+			float value = ( 1/ rigid.angularVelocity.magnitude) * (dampRoation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
+			rigid.angularVelocity -= rigid.angularVelocity * rigid.angularVelocity.magnitude * value * Time.fixedDeltaTime;
+		} else {
+			rigid.angularVelocity = Vector3.zero;
+		}*/
+
+		//Vector3 localAngularVelocity = transform.InverseTransformDirection(rigid.angularVelocity);
+		//rigid.AddRelativeTorque(-localAngularVelocity * slowDownPower * Time.fixedDeltaTime);
+
+		//rigid.AddForce ( dis * dir);
 	}
 
 
@@ -238,38 +270,21 @@ public class GrabAndDrag : MonoBehaviour {
 	void OnDrawGizmos(){
 		Vector3 origin = Camera.main.transform.position;
 
-		Debug.DrawLine (origin, origin + Camera.main.transform.forward * range, Color.red);
+		Debug.DrawLine (origin, origin + Camera.main.transform.forward * range, new Color(1,0,0,0.1f));
 
 		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
 
 		if(selectedObj != null){
-			CalculateBounds (selectedObj);
+			boundary.DrawBounds();
 
-			UnityEditor.Handles.color = new Color (1, 1, 0, 0.5f);
-			UnityEditor.Handles.DrawWireCube (center, Vector3.one * 0.2f);
+			UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
+			UnityEditor.Handles.DrawWireCube (center, Vector3.one * 0.1f);
 		}
 	}
-
-	Vector3 CenterObject(GameObject obj){
-
-		Bounds bounds = obj.transform.GetComponent<Renderer>().bounds;
-
-		Renderer[] renders = obj.GetComponentsInChildren<Renderer> ();
-		foreach (Renderer render in renders){
-			if (render.gameObject.activeSelf != true)
-				continue;
-
-			bounds.Encapsulate (render.bounds.min);
-			bounds.Encapsulate (render.bounds.max);
-		}
-
-		return bounds.center - obj.transform.position;
-	}
-
 
 	//FLUFF
 
-	private void CalculateBounds(GameObject obj){
+	/*private void CalculateBounds(GameObject obj){
 
 		Bounds bounds = obj.transform.GetComponent<Renderer>().bounds;
 
@@ -289,11 +304,15 @@ public class GrabAndDrag : MonoBehaviour {
 
 		UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
 		UnityEditor.Handles.DrawWireCube (bounds.center, bounds.size);
-	}
+	}*/
 
 	public void rotateRigidBodyAroundPointBy(Rigidbody rb, Vector3 origin, Vector3 axis, float angle){
 		Quaternion q = Quaternion.AngleAxis(angle, axis);
 		rb.MovePosition(q * (rb.transform.position - origin) + origin);
 		rb.MoveRotation(rb.transform.rotation * q);
+	}
+
+	public static Quaternion QuaternionFromMatrix(Matrix4x4 m) {
+		return Quaternion.LookRotation(m.GetColumn(2), m.GetColumn(1));
 	}
 }
