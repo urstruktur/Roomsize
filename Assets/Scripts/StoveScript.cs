@@ -72,12 +72,18 @@ public class StoveScript : MonoBehaviour
 
             foreach(GameObject o in heatingPlateOff)
             {
-                o.GetComponent<MeshRenderer>().enabled = !isOn;
+                if(o != null)
+                {
+                    o.GetComponent<MeshRenderer>().enabled = !isOn;
+                }
             }
 
             foreach (GameObject o in heatingPlateOn)
             {
-                o.GetComponent<MeshRenderer>().enabled = isOn;
+                if (o != null)
+                {
+                    o.GetComponent<MeshRenderer>().enabled = isOn;
+                }
             }
 
         }
