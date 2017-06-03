@@ -47,18 +47,7 @@ public class ScaleManager : MonoBehaviour {
         else{
             Debug.LogError("No GameObject with Player tag!");
         }
-
-
-        /*
-        Vector3 t = doorsillBig.transform.localPosition - doorsillSmall.transform.localPosition;
-        t.Scale(Vector3.one * (1 / doorSize));
-        t = doorsillSmall.transform.rotation * t; // change to relative rotation to doorsillBig
-        dimensionalTransformation = Matrix4x4.TRS(t,
-                                                  doorsillSmall.transform.rotation, //Quaternion.Inverse(doorsillSmall.transform.rotation) * doorsillBig.transform.rotation,
-                                                  Vector3.one * (1 / doorSize));
-
-        */
-
+      
         // collect rigidbodies 
         Rigidbody[] initialBodies = initialRoom.GetComponentsInChildren<Rigidbody>();
         
@@ -75,10 +64,11 @@ public class ScaleManager : MonoBehaviour {
         GameObject originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
         originalBigDoor = GetFirstChildWithTag(initialRoom, "BigDoor");
 
-        // instatiate downscaled rooms
+        // --- INSTANTIATE DOWNSCALED ROOMS ---
         GameObject previousRoom = initialRoom;
         for(int roomNr = 0; roomNr < depthSmall; roomNr++)
         {
+            // instantiate
             GameObject bigDoor = GetFirstChildWithTag(previousRoom, "BigDoor");
             GameObject smallDoor = GetFirstChildWithTag(previousRoom, "SmallDoor");
             rooms[roomNr] = new GameObject();
@@ -108,20 +98,26 @@ public class ScaleManager : MonoBehaviour {
                     if (initialBodies[a].gameObject.name == copiedBody.gameObject.name)
                     {
                         assocs[a][roomNr + 1] = copiedBody;
-                    }
 
-                    // set all kinematic
-                    copiedBody.isKinematic = true;
+                        // add marker
+                        ScaleMarker marker = copiedBody.gameObject.AddComponent<ScaleMarker>();
+                        marker.scaleLevel = -(roomNr + 1);
+                        marker.bigDoorPosition = smallDoor.transform.position;
+
+                        // set all kinematic
+                        copiedBody.isKinematic = true;
+                    }
                 }
             }
 
             previousRoom = rooms[roomNr];
         }
 
-        // instatiate upscaled rooms
+        // --- INSTANTIATE UPSCALED ROOMS ---
         previousRoom = initialRoom;
         for (int roomNr = depthSmall; roomNr < depthBig+depthSmall; roomNr++)
         {
+            // instantiate
             GameObject bigDoor = GetFirstChildWithTag(previousRoom, "BigDoor");
             GameObject smallDoor = GetFirstChildWithTag(previousRoom, "SmallDoor");
             rooms[roomNr] = new GameObject();
@@ -135,18 +131,14 @@ public class ScaleManager : MonoBehaviour {
             rooms[roomNr] = instance;
             rooms[roomNr].name = "room " + (roomNr - depthSmall + 1);
 
-            // only invert first room copy
-            if (roomNr == depthSmall)
-            {
-                InvertKinematic(rooms[roomNr].transform);
-            }
-
             // scale light range
             Light[] lights = rooms[roomNr].GetComponentsInChildren<Light>();
             foreach (Light lightCopy in lights)
             {
                 lightCopy.range = lightCopy.range / doorSize;
             }
+
+
 
             // associate rigidbodies
             Rigidbody[] bodies = rooms[roomNr].GetComponentsInChildren<Rigidbody>();
@@ -156,6 +148,20 @@ public class ScaleManager : MonoBehaviour {
                     if (initialBodies[a].gameObject.name == copiedBody.gameObject.name)
                     {
                         assocs[a][depthSmall + roomNr] = copiedBody;
+
+                        // add marker
+                        ScaleMarker marker = copiedBody.gameObject.AddComponent<ScaleMarker>();
+                        marker.scaleLevel = (roomNr - depthSmall + 1);
+                        marker.bigDoorPosition = smallDoor.transform.position;
+
+                        // only invert kinematic in first room copy, others always kinematic
+                        if (roomNr == depthSmall)
+                        {
+                            copiedBody.isKinematic = !copiedBody.isKinematic;
+                        }else
+                        {
+                            copiedBody.isKinematic = true;
+                        }
                     }
                 }
             }
@@ -183,7 +189,7 @@ public class ScaleManager : MonoBehaviour {
 
     bool HasRigidbodyChildren(Transform parent)
     {
-        foreach (Transform t in parent.GetComponentInChildren<Transform>())
+        foreach (Transform t in parent.GetComponentsInChildren<Transform>())
         {
             if (t.GetComponent<Rigidbody>() != null)
             {
