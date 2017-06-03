@@ -17,7 +17,6 @@ public class DoorOpener : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-        Debug.Log("door opening");
 
         foreach(GameObject door in doors)
         {
@@ -25,7 +24,6 @@ public class DoorOpener : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("isOpen", true);
-                Debug.Log("door opening");
             }
         }
     }

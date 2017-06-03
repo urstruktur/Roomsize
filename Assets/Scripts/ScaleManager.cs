@@ -12,32 +12,28 @@ public class ScaleManager : MonoBehaviour {
     //
 
     public GameObject initialRoom;
+    private GameObject originalBigDoor;
 
-    public GameObject doorsillSmall;
-    public GameObject doorsillBig;
+    // public GameObject doorsillSmall;
+    // public GameObject doorsillBig;
+    //  public GameObject doorsillSmallExit;
+    //  public GameObject testObject;
 
-    public GameObject doorsillSmallExit;
-
-    public GameObject testObject;
-
-   // [Range(1, 6)]
+    // [Range(1, 6)]
     private int depthSmall = 1;
     private int depthBig = 2;
+    private int depthBigStatic = 1;
 
     [Range(0.1f, 1f)]
     public float doorSize = 0.1f;
 
     private GameObject[] rooms;
-    private Rigidbody[][] associations;
-
-    private Quaternion dimensionalRotation;
-    private Vector3[] dimensionalTranslation;
-
-    private Matrix4x4 dimensionalTransformation;
+    private Rigidbody[][] assocs;
 
     private GameObject player;
     private FirstPersonController fpc;
 
+    static public int currentRoom = 0;
     static public bool inNormalSize = true;
 
     void Start() {
@@ -52,7 +48,8 @@ public class ScaleManager : MonoBehaviour {
             Debug.LogError("No GameObject with Player tag!");
         }
 
-        
+
+        /*
         Vector3 t = doorsillBig.transform.localPosition - doorsillSmall.transform.localPosition;
         t.Scale(Vector3.one * (1 / doorSize));
         t = doorsillSmall.transform.rotation * t; // change to relative rotation to doorsillBig
@@ -60,155 +57,198 @@ public class ScaleManager : MonoBehaviour {
                                                   doorsillSmall.transform.rotation, //Quaternion.Inverse(doorsillSmall.transform.rotation) * doorsillBig.transform.rotation,
                                                   Vector3.one * (1 / doorSize));
 
-        if(testObject != null)
-        {
-            GameObject o1 = Instantiate(testObject);
-
-            o1.transform.localPosition = (o1.transform.position + ExtractTranslationFromMatrix(ref dimensionalTransformation));
-            o1.transform.localRotation = ExtractRotationFromMatrix(ref dimensionalTransformation);
-            o1.transform.localScale = Vector3.Scale(o1.transform.localScale, ExtractScaleFromMatrix(ref dimensionalTransformation));
-
-        }
-
-
-        rooms = new GameObject[depthBig + depthSmall];
-
-        // create BIG room copy and set position, scale & rotation correctly
-        rooms[0] = new GameObject();
-        rooms[0].name = "roomCopy" + 1;
-        rooms[0].transform.position = doorsillSmall.transform.position;
-        Instantiate(initialRoom, rooms[0].transform, true);
-        rooms[0].transform.localScale = new Vector3(1 / doorSize, 1 / doorSize, 1 / doorSize);
-        rooms[0].transform.position = doorsillBig.transform.position;
-        rooms[0].transform.localRotation = Quaternion.Inverse(doorsillSmall.transform.rotation);
-        InvertKinematic(rooms[0].transform);
-
-        Vector3 doorsillSmall0 = rooms[0].transform.position;
-        Vector3 doorsillBig0 = - rooms[0].transform.position + doorsillSmall.transform.rotation * (doorsillBig.transform.position * (1/doorSize));
-
-        GameObject test = new GameObject("doorsillSmall0");
-        test.transform.position = doorsillSmall0;
-
-        // create SMALL room copy and set position, scale & rotation correctly
-        rooms[1] = new GameObject();
-        rooms[1].name = "roomCopy" + 2;
-        rooms[1].transform.position = doorsillBig.transform.position;
-        Instantiate(initialRoom, rooms[1].transform, true);
-        rooms[1].transform.localScale = new Vector3(doorSize, doorSize, doorSize);
-        rooms[1].transform.position = doorsillSmall.transform.position;
-        rooms[1].transform.localRotation = doorsillSmall.transform.rotation;
-        InvertKinematic(rooms[1].transform);
-
-        // save associations
-        Rigidbody[] bodiesInitial = initialRoom.GetComponentsInChildren<Rigidbody>();
-        Rigidbody[] bodiesCopyBig = rooms[0].GetComponentsInChildren<Rigidbody>();
-        Rigidbody[] bodiesCopySmall = rooms[1].GetComponentsInChildren<Rigidbody>();
-
-        // create bigger rigidbodys
-        //Rigidbody[] bodiesCopyBigger = rooms[0].GetComponentsInChildren<Rigidbody>();
-        /*
-        rooms[2] = new GameObject();
-        rooms[2].name = "roomCopy" + 3;
-        rooms[2].transform.position = doorsillSmall0;
-        Instantiate(initialRoom, rooms[2].transform, true);
-        rooms[2].transform.localScale = new Vector3(1 / doorSize / doorSize, 1 / doorSize / doorSize, 1 / doorSize / doorSize);
-        rooms[2].transform.position = doorsillBig0;
         */
 
-        associations = new Rigidbody[bodiesInitial.Length][];
-
-        for (int i = 0; i < bodiesInitial.Length; i++)
+        // collect rigidbodies 
+        Rigidbody[] initialBodies = initialRoom.GetComponentsInChildren<Rigidbody>();
+        
+        // initalize association array
+        assocs = new Rigidbody[initialBodies.Length][];
+        for(int i = 0; i < initialBodies.Length; i++)
         {
-            Rigidbody bigAssociation = null;
-            foreach (Rigidbody bodyCopyBig in bodiesCopyBig) {
-                if (bodiesInitial[i].gameObject.name == bodyCopyBig.gameObject.name)
-                {
-                    bigAssociation = bodyCopyBig;
-                }
-            }
-            Rigidbody smallAssociation = null;
-            foreach (Rigidbody bodyCopySmall in bodiesCopySmall)
+            assocs[i] = new Rigidbody[depthBig+depthSmall+1];
+            assocs[i][0] = initialBodies[i];
+        }
+
+        // create scaled rooms
+        rooms = new GameObject[depthBig + depthSmall];
+        GameObject originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
+        originalBigDoor = GetFirstChildWithTag(initialRoom, "BigDoor");
+
+        // instatiate downscaled rooms
+        GameObject previousRoom = initialRoom;
+        for(int roomNr = 0; roomNr < depthSmall; roomNr++)
+        {
+            GameObject bigDoor = GetFirstChildWithTag(previousRoom, "BigDoor");
+            GameObject smallDoor = GetFirstChildWithTag(previousRoom, "SmallDoor");
+            rooms[roomNr] = new GameObject();
+            rooms[roomNr].transform.position = bigDoor.transform.position;
+            GameObject instance = Instantiate(previousRoom, rooms[roomNr].transform, true);
+            rooms[roomNr].transform.localScale = new Vector3(doorSize, doorSize, doorSize);
+            rooms[roomNr].transform.position = smallDoor.transform.position;
+            rooms[roomNr].transform.localRotation = originalSmallDoor.transform.rotation;
+            instance.transform.SetParent(null);
+            Destroy(rooms[roomNr]);
+            rooms[roomNr] = instance;
+            rooms[roomNr].name = "room -" + (roomNr + 1);
+
+            // scale light range
+            Light[] lights = rooms[roomNr].GetComponentsInChildren<Light>();
+            foreach (Light lightCopy in lights)
             {
-                if (bodiesInitial[i].gameObject.name == bodyCopySmall.gameObject.name)
+                lightCopy.range = lightCopy.range * doorSize;
+            }
+
+            // associate rigidbodies
+            Rigidbody[] bodies = rooms[roomNr].GetComponentsInChildren<Rigidbody>();
+            for (int a = 0; a < initialBodies.Length; a++)
+            {
+                foreach (Rigidbody copiedBody in bodies)
                 {
-                    smallAssociation = bodyCopySmall;
+                    if (initialBodies[a].gameObject.name == copiedBody.gameObject.name)
+                    {
+                        assocs[a][roomNr + 1] = copiedBody;
+                    }
+
+                    // set all kinematic
+                    copiedBody.isKinematic = true;
                 }
             }
-            associations[i] = new Rigidbody[]{ bodiesInitial[i], bigAssociation, smallAssociation };
+
+            previousRoom = rooms[roomNr];
         }
 
-        // change light range of copy
-        Light[] lightCopies = rooms[0].GetComponentsInChildren<Light>();
-        foreach(Light lightCopy in lightCopies)
+        // instatiate upscaled rooms
+        previousRoom = initialRoom;
+        for (int roomNr = depthSmall; roomNr < depthBig+depthSmall; roomNr++)
         {
-            lightCopy.range = lightCopy.range / doorSize;
+            GameObject bigDoor = GetFirstChildWithTag(previousRoom, "BigDoor");
+            GameObject smallDoor = GetFirstChildWithTag(previousRoom, "SmallDoor");
+            rooms[roomNr] = new GameObject();
+            rooms[roomNr].transform.position = smallDoor.transform.position;
+            GameObject instance = Instantiate(previousRoom, rooms[roomNr].transform, true);
+            rooms[roomNr].transform.localScale = new Vector3(1 / doorSize, 1 / doorSize, 1 / doorSize);
+            rooms[roomNr].transform.position = bigDoor.transform.position;
+            rooms[roomNr].transform.localRotation = Quaternion.Inverse(originalSmallDoor.transform.rotation);
+            instance.transform.SetParent(null);
+            Destroy(rooms[roomNr]);
+            rooms[roomNr] = instance;
+            rooms[roomNr].name = "room " + (roomNr - depthSmall + 1);
+
+            // only invert first room copy
+            if (roomNr == depthSmall)
+            {
+                InvertKinematic(rooms[roomNr].transform);
+            }
+
+            // scale light range
+            Light[] lights = rooms[roomNr].GetComponentsInChildren<Light>();
+            foreach (Light lightCopy in lights)
+            {
+                lightCopy.range = lightCopy.range / doorSize;
+            }
+
+            // associate rigidbodies
+            Rigidbody[] bodies = rooms[roomNr].GetComponentsInChildren<Rigidbody>();
+            for(int a = 0; a < initialBodies.Length; a++) 
+            {
+                foreach (Rigidbody copiedBody in bodies) { 
+                    if (initialBodies[a].gameObject.name == copiedBody.gameObject.name)
+                    {
+                        assocs[a][depthSmall + roomNr] = copiedBody;
+                    }
+                }
+            }
+
+            // for each big room level that exceed depthBigStatic delete all non-rigidbodies
+            if(roomNr - depthSmall + 1 > depthBigStatic)
+            {
+                Transform transforms = rooms[roomNr].GetComponentInChildren<Transform>();
+
+                foreach(Transform t in transforms)
+                {
+                    if(t.GetComponent<Rigidbody>() == null && !HasRigidbodyChildren(t))
+                    {
+                        Destroy(t.gameObject);
+                    }
+                }
+            }
+
+
+            previousRoom = rooms[roomNr];
         }
 
-        // change light range of copy
-        lightCopies = rooms[1].GetComponentsInChildren<Light>();
-        foreach (Light lightCopy in lightCopies)
+       // Debug.Log(associations.Length + " associations saved.");
+    }
+
+    bool HasRigidbodyChildren(Transform parent)
+    {
+        foreach (Transform t in parent.GetComponentInChildren<Transform>())
         {
-            lightCopy.range = lightCopy.range * doorSize;
+            if (t.GetComponent<Rigidbody>() != null)
+            {
+                return true;
+            }
         }
 
-        Debug.Log(associations.Length + " associations saved.");
+        return false;
     }
 
 	void Update () {
         // check for active room
-        Vector3 relativePosition = player.transform.position - doorsillBig.transform.position;
+        Vector3 relativePosition = player.transform.position - originalBigDoor.transform.position;
         
         if(relativePosition.z > 0)
         {
             if (!inNormalSize)
             {
-                Debug.Log("normal size");
+                Debug.Log("In original room.");
                 inNormalSize = true;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed / 2;
-                InvertActivation();
+                //InvertActivation();
             }
         }
         else{
             if (inNormalSize)
             {
-                Debug.Log("small size");
+                Debug.Log("In big room.");
                 inNormalSize = false;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed * 2;
-                InvertActivation();
+               // InvertActivation();
+            }
+        }
+
+        // apply transformation on all associated rigidbodies
+        
+        foreach(Rigidbody[] association in assocs)
+        {
+            for(int n = 0; n < association.Length; n++)
+            {
+                if (!association[n].isKinematic && association[n].transform.hasChanged)
+                {
+                    for (int m = 0; m < association.Length; m++)
+                    {
+                        if(m != n)
+                        {
+                            association[m].transform.localPosition = association[n].transform.localPosition;
+                            association[m].transform.localRotation = association[n].transform.localRotation;
+                            association[m].transform.hasChanged = false;
+                        }
+                    }
+
+                    association[n].transform.hasChanged = false;
+                   
+                    break; // no need to iterate through the rest
+                }
             }
         }
         
-        foreach (Rigidbody[] entry in associations)
-        {
-            Rigidbody a = entry[0];
-            Rigidbody b = entry[1];
-            Rigidbody c = entry[2];
-
-            if (!a.isKinematic && a.transform.hasChanged)
-            {
-                b.transform.localPosition = a.transform.localPosition;
-                b.transform.localRotation = a.transform.localRotation;
-                a.transform.hasChanged = false;
-
-                c.transform.localPosition = a.transform.localPosition;
-                c.transform.localRotation = a.transform.localRotation;
-            }
-            else if(!b.isKinematic && b.transform.hasChanged)
-            {
-                a.transform.localPosition = b.transform.localPosition;
-                a.transform.localRotation = b.transform.localRotation;
-                b.transform.hasChanged = false;
-
-                c.transform.localPosition = b.transform.localPosition;
-                c.transform.localRotation = b.transform.localRotation;
-            }
-        }
-
         if (Input.GetKey("x"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
+
 
     private void InvertActivation()
     {
@@ -265,4 +305,16 @@ public class ScaleManager : MonoBehaviour {
         translate.z = matrix.m23;
         return translate;
     }
+
+    public static GameObject GetFirstChildWithTag(GameObject parent, String tag){
+        GameObject[] tagged = GameObject.FindGameObjectsWithTag(tag);
+        foreach(GameObject o in tagged)
+        {
+            if (o.transform.IsChildOf(parent.transform))
+            {
+                return o;
+            }
+        }
+        return null;
+     }
 }
