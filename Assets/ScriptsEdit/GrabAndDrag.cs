@@ -14,21 +14,8 @@ public class GrabAndDrag : MonoBehaviour {
 
 	public Material selectedMat, markedMat;
 
-	GameObject selectedObj = null;
+	public GameObject selectedObj = null;
 	Boundary boundary = null;
-
-	public Vector3 center{
-		get{
-			if (boundary == null) {
-				return new Vector3 (float.NaN, float.NaN, float.NaN);
-			}
-
-			// selectedObj.transform.position + selectedObj.transform.rotation * 
-			Matrix4x4 localToWorldMatrix = selectedObj.transform.localToWorldMatrix;
-			Vector3 center = localToWorldMatrix.MultiplyPoint3x4(boundary.center);
-			return center;
-		}
-	}
 
 
 	Dictionary<string, List<Tag>> materials = new Dictionary<string, List<Tag>>();
@@ -127,8 +114,6 @@ public class GrabAndDrag : MonoBehaviour {
 			if(root == gameObject || rigid == null || rigid.isKinematic){
 				continue;
 			}
-				
-			Ray ray = new Ray (origin, forward);
 
 			Vector3 point = NearestPointOnLine(origin, forward, sphereHit [i].point);
 
@@ -143,7 +128,7 @@ public class GrabAndDrag : MonoBehaviour {
 				best = distance;
 			}
 				
-			Debug.DrawLine (ray.origin, ping, new Color (1, 1, 0, 0.1f));
+			Debug.DrawLine (origin, ping, new Color (1, 1, 0, 0.1f));
 			Debug.DrawLine (point, ping, new Color (0, 1, 0, 0.5f));
 
 		}
@@ -203,11 +188,17 @@ public class GrabAndDrag : MonoBehaviour {
 		float distance =  Mathf.Min (radius / Vector3.Project(forward, (axis_forward * radius)).magnitude , maxRadius);
 
 
-		Debug.DrawLine (origin, origin + forward * distance, new Color(1,1,0,0.6f));
+		//Debug.DrawLine (origin, origin + forward * distance, new Color(1,1,0,0.6f));
 
 		Vector3 goal = origin + forward * distance;
 
-		Debug.DrawLine (center, goal, new Color(0,1,0,1f));
+		//Debug.DrawLine (boundary.center, goal, new Color(0,1,0,1f));
+
+		if (boundary == null) {
+			boundary = new Boundary (selectedObj);
+		}
+
+		Debug.DrawLine (origin, boundary.Intersect(origin, forward), new Color(0,1,0,1f));
 
 		/*if (goal.x != goal.x) {
 			goal = origin + forward * maxRadius;
@@ -218,16 +209,17 @@ public class GrabAndDrag : MonoBehaviour {
 		//Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
 
 		//Vector3 goal
-		//rigid.velocity = (goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime;
+		Vector3 center = boundary.center;
+		rigid.velocity = ((goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime)*0.1f;
 
 
 		//ROTATION
-		/*if (rigid.angularVelocity.magnitude >= 0.01f) {
+		if (rigid.angularVelocity.magnitude >= 0.01f) {
 			float value = ( 1/ rigid.angularVelocity.magnitude) * (dampRoation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
 			rigid.angularVelocity -= rigid.angularVelocity * rigid.angularVelocity.magnitude * value * Time.fixedDeltaTime;
 		} else {
 			rigid.angularVelocity = Vector3.zero;
-		}*/
+		}
 
 		//Vector3 localAngularVelocity = transform.InverseTransformDirection(rigid.angularVelocity);
 		//rigid.AddRelativeTorque(-localAngularVelocity * slowDownPower * Time.fixedDeltaTime);
@@ -274,12 +266,11 @@ public class GrabAndDrag : MonoBehaviour {
 
 		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
 
-		if(selectedObj != null){
+		if(selectedObj != null && boundary != null){
 			boundary.DrawBounds();
-
-			UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
-			UnityEditor.Handles.DrawWireCube (center, Vector3.one * 0.1f);
 		}
+
+		DragObject ();
 	}
 
 	//FLUFF
