@@ -4,13 +4,35 @@ using UnityEngine;
 
 public class ForceField : MonoBehaviour {
 
-    void OnTriggerEnter(Collider other)
+    public bool noForceInX = false;
+    public bool noForceInY = false;
+    public bool noForceInZ = false;
+
+    public float multiplier = 1.0f;
+
+   
+
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            Vector3 force = this.transform.position - other.transform.position;
+            Vector3 force = other.transform.position - this.transform.position;
             force.Normalize();
-            other.GetComponent<Rigidbody>().AddForce(force);
+            if (noForceInX)
+            {
+                force.x = 0;
+            }
+            if (noForceInY)
+            {
+                force.y = 0;
+            }
+            if (noForceInZ)
+            {
+                force.z = 0;
+            }
+
+            ImpactReceiver script = other.gameObject.GetComponent<ImpactReceiver>();
+            if (script != null) script.AddImpact(force, multiplier);
         }
     }
 }

@@ -27,9 +27,6 @@ public class LevelEnder : MonoBehaviour {
                     setActiveOnTrigger.SetActive(true);
                 }
             }
-        }else
-        {
-            Debug.Log("not finished level");
         }
     }
 
