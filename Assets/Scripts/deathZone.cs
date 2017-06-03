@@ -12,7 +12,6 @@ public class deathZone : MonoBehaviour {
             direction.Normalize();
             ImpactReceiver script = other.gameObject.GetComponent<ImpactReceiver>();
             if (script != null) script.AddImpact(direction, 50f);
-            Debug.Log("enter");
         }
     }
 }

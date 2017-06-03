@@ -11,10 +11,18 @@ public class StoveScript : MonoBehaviour
     private GameObject[] heatingPlateOff;
     public GameObject[] switches;
 
+    public bool on = false;
     static public bool isOn = false;
-    // Update is called once per frame
+    
+    void Start()
+    {
+        isOn = on;
+    }
+    
+
     void Update()
     {
+
         if(heatingPlateOff == null)
         {
             heatingPlateOff = GameObject.FindGameObjectsWithTag("HeaterOff");
