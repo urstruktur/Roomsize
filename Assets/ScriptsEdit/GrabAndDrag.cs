@@ -208,6 +208,7 @@ public class GrabAndDrag : MonoBehaviour {
 		//Debug.DrawLine (origin, origin + axis_forward * radius, new Color(0,0,1,0.6f));
 		//Debug.DrawLine (origin, goal, new Color(0,1,0,1f));
 
+
 		//Vector3 goal
 		Vector3 center = boundary.center;
 		rigid.velocity = ((goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime)*0.1f;
