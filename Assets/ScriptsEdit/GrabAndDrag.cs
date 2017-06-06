@@ -12,9 +12,13 @@ public class GrabAndDrag : MonoBehaviour {
 	public float maxRadius = 2;
 	public float dampRoation = 3.0f;
 
+	public bool variation = false;
+
 	public Material selectedMat, markedMat;
 
 	public GameObject selectedObj = null;
+	Quaternion rotation = Quaternion.identity;
+	Quaternion t_rotation = Quaternion.identity;
 	Boundary boundary = null;
 
 
@@ -26,6 +30,17 @@ public class GrabAndDrag : MonoBehaviour {
 		public Tag(Renderer render, Material mat){
 			this.render = render;
 			this.mat = mat;
+		}
+	}
+
+	Trigger last_trigger;
+	struct Trigger{
+		public string trigger;
+		public float time;
+
+		public Trigger(string trigger){
+			this.trigger = trigger;
+			this.time = Time.time;
 		}
 	}
 
@@ -52,28 +67,47 @@ public class GrabAndDrag : MonoBehaviour {
 		if (Input.GetMouseButtonDown (1) && selectedObj != null) {
 			UnityStandardAssets.Characters.FirstPerson.FirstPersonController controller = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
 			controller.activeRotation = false;
+
+			if (last_trigger.trigger == "Mouse1" && last_trigger.time + 1 >= Time.time) {
+				rotation = Quaternion.identity;
+				t_rotation = Quaternion.identity;
+				//Debug.Log ("RESET: " + last_trigger.time + " " + Time.time);
+			} else {
+				last_trigger = new Trigger ("Mouse1");
+			}
 		}
-		if (Input.GetMouseButton(1) && selectedObj != null) {
-			
-			float adjustX = Input.GetAxis ("Mouse X") * rotationSensitivity;
-			float adjustY = Input.GetAxis ("Mouse Y") * rotationSensitivity;
 
-			//Quaternion yaw = Quaternion.AngleAxis (adjustX, new Vector3(0,1,0)); //HORIZONTAL
-			//Quaternion pitch = Quaternion.AngleAxis (adjustY, selectedObj.transform.rotation * yaw * new Vector3(1,0,0)); //VERTICAL
-
-			Quaternion yaw = Quaternion.AngleAxis (adjustX, new Vector3(0,1,0)); //HORIZONTAL
-			Quaternion pitch = Quaternion.AngleAxis (adjustY, new Vector3(1,0,0)); //VERTICAL
-
-			// yaw *
-			Quaternion rotation = pitch * selectedObj.transform.rotation;
-
-			selectedObj.transform.rotation = rotation;
-			//selectedObj.transform.position -= rotation * center;
-		}
 		if (Input.GetMouseButtonUp (1)) {
 			UnityStandardAssets.Characters.FirstPerson.FirstPersonController controller = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
 			controller.activeRotation = true;
 		}
+
+		//Vector3 forward = Camera.main.transform.forward;
+		//Vector3 axis_forward = AxisForward ();
+
+		if (Input.GetMouseButton(1) && selectedObj != null) {
+
+			float adjustX = Input.GetAxis ("Mouse X") * rotationSensitivity;
+			float adjustY = Input.GetAxis ("Mouse Y") * rotationSensitivity;
+
+			Quaternion yaw = Quaternion.AngleAxis (adjustX, Vector3.up); //HORIZONTAL
+			Quaternion pitch = Quaternion.AngleAxis (adjustY,  Vector3.right); //VERTICAL
+			if (variation) {
+				pitch = Quaternion.AngleAxis (adjustY, t_rotation  * yaw * Vector3.right);
+			}
+
+			t_rotation = pitch * yaw * t_rotation;
+
+		}
+
+		//if (selectedObj == null) {
+		//	return;
+		//}
+
+		//Rotation
+		//selectedObj.transform.rotation = Quaternion.LookRotation (axis_forward) * t_rotation * rotation;//  t_rotation;
+
+
 
 		MarkObject ("Mark", detectedObj, markedMat);
 		/*if (selectedObj == null) {
@@ -150,7 +184,7 @@ public class GrabAndDrag : MonoBehaviour {
 		if (selectedObj != null) {
 
 			boundary = new Boundary (selectedObj);
-
+			rotation = Quaternion.Inverse(Quaternion.LookRotation(AxisForward())) * selectedObj.transform.rotation;
 			//center = CenterObject(selectedObj);
 
 			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
@@ -160,13 +194,16 @@ public class GrabAndDrag : MonoBehaviour {
 
 	void ReleaseObject(){
 		if (selectedObj != null) {
+
 			Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 			rigid.velocity = Vector3.zero;
 			rigid.useGravity = true;
 
+			rotation = Quaternion.identity;
 			selectedObj = null;
 		}
 	}
+
 
 	void DragObject(){
 
@@ -174,18 +211,27 @@ public class GrabAndDrag : MonoBehaviour {
 			return;
 		}
 
+		// * Camera.main.transform.rotation;
+
+
 		Rigidbody rigid = selectedObj.GetComponent<Rigidbody> ();
 		rigid.useGravity = false;
 
 		Vector3 origin = Camera.main.transform.position;
 
-		Vector3 forward = Camera.main.transform.forward;
-		Vector3 upward = Camera.main.transform.up; // center;
 
-		//INCREASE LENGTH
-		Vector3 axis_forward =  Vector3.Cross (Vector3.up, Vector3.Cross (forward, Vector3.up)).normalized;
-		axis_forward = axis_forward.magnitude == 0 ? axis_forward : Vector3.Cross (Vector3.up, Vector3.Cross (upward, Vector3.up)).normalized;
+		Vector3 forward = Camera.main.transform.forward;
+		Vector3 axis_forward = AxisForward();
+
+		//Vector3 axis_forward =  Vector3.Cross (Vector3.up, Vector3.Cross (forward, Vector3.up)).normalized;
+
 		float distance =  Mathf.Min (radius / Vector3.Project(forward, (axis_forward * radius)).magnitude , maxRadius);
+
+
+		// ROTATION
+		selectedObj.transform.rotation = Quaternion.LookRotation (axis_forward) * t_rotation * rotation;
+
+
 
 
 		//Debug.DrawLine (origin, origin + forward * distance, new Color(1,1,0,0.6f));
@@ -198,7 +244,8 @@ public class GrabAndDrag : MonoBehaviour {
 			boundary = new Boundary (selectedObj);
 		}
 
-		Debug.DrawLine (origin, boundary.Intersect(origin, forward), new Color(0,1,0,1f));
+		//######
+		//Debug.DrawLine (origin, boundary.Intersect(origin, forward), new Color(0,1,0,1f));
 
 		/*if (goal.x != goal.x) {
 			goal = origin + forward * maxRadius;
@@ -211,10 +258,10 @@ public class GrabAndDrag : MonoBehaviour {
 
 		//Vector3 goal
 		Vector3 center = boundary.center;
-		rigid.velocity = ((goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime)*0.1f;
+		rigid.velocity = ((goal - center).normalized * Vector3.Distance(center, goal) / Time.fixedDeltaTime)*0.5f;
 
 
-		//ROTATION
+		//ROTATION DAMPING
 		if (rigid.angularVelocity.magnitude >= 0.01f) {
 			float value = ( 1/ rigid.angularVelocity.magnitude) * (dampRoation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
 			rigid.angularVelocity -= rigid.angularVelocity * rigid.angularVelocity.magnitude * value * Time.fixedDeltaTime;
@@ -257,6 +304,20 @@ public class GrabAndDrag : MonoBehaviour {
 			}
 			materials.Add (group, tags);
 		}
+	}
+
+
+	Vector3 AxisForward(){
+		Vector3 forward = Camera.main.transform.forward;
+		Vector3 upward = Camera.main.transform.up; // center;
+
+		//INCREASE LENGTH
+		Vector3 axis_forward =  Vector3.Cross (transform.up, Vector3.Cross (transform.up, forward)).normalized;
+		axis_forward = axis_forward.magnitude == 0 ? Vector3.Cross (forward, transform.right).normalized : axis_forward;
+
+		Debug.DrawLine (Camera.main.transform.position, Camera.main.transform.position - axis_forward, Color.blue);
+
+		return axis_forward;
 	}
 
 
