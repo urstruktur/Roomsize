@@ -211,7 +211,7 @@ public class ScaleManager : MonoBehaviour {
                 Debug.Log("In original room.");
                 inNormalSize = true;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed / 2;
-                //InvertActivation();
+                InvertActivation();
             }
         }
         else{
@@ -220,7 +220,7 @@ public class ScaleManager : MonoBehaviour {
                 Debug.Log("In big room.");
                 inNormalSize = false;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed * 2;
-               // InvertActivation();
+                InvertActivation();
             }
         }
 
@@ -258,13 +258,13 @@ public class ScaleManager : MonoBehaviour {
 
     private void InvertActivation()
     {
-        if (rooms[1].activeInHierarchy)
+        if (rooms[0].activeInHierarchy)
         {
-            rooms[1].SetActive(false);
+            rooms[0].SetActive(false);
 
         }else
         {
-            rooms[1].SetActive(true);
+            rooms[0].SetActive(true);
         }
     }
             
