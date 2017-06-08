@@ -21,9 +21,14 @@ public class DoorOpener : MonoBehaviour
         foreach(GameObject door in doors)
         {
             Animator animator = door.GetComponent<Animator>();
+
             if (animator != null)
             {
-                animator.SetBool("isOpen", true);
+                LeanTween.cancel(animator.gameObject);
+                LeanTween.value(animator.gameObject, animator.GetFloat("openness"), ScaleManager.inNormalSize ? 1 : -1, 0.8f).setOnUpdate((float val) =>
+                {
+                   animator.SetFloat("openness", val);
+                }).setEase(LeanTweenType.easeOutQuad);
             }
         }
     }
@@ -37,7 +42,11 @@ public class DoorOpener : MonoBehaviour
             Animator animator = door.GetComponent<Animator>();
             if (animator != null)
             {
-                animator.SetBool("isOpen", false);
+                LeanTween.cancel(animator.gameObject);
+                LeanTween.value(animator.gameObject, animator.GetFloat("openness"), 0, 0.8f).setOnUpdate((float val) =>
+                {
+                    animator.SetFloat("openness", val);
+                }).setEase(LeanTweenType.easeOutQuad);
             }
         }
     }
