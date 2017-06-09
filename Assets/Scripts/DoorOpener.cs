@@ -17,7 +17,7 @@ public class DoorOpener : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-
+        if(ReferenceEquals( other.gameObject, player))
         foreach(GameObject door in doors)
         {
             Animator animator = door.GetComponent<Animator>();
@@ -37,6 +37,7 @@ public class DoorOpener : MonoBehaviour
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
 
+        if (ReferenceEquals(other.gameObject, player))
         foreach (GameObject door in doors)
         {
             Animator animator = door.GetComponent<Animator>();
