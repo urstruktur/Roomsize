@@ -24,6 +24,9 @@ public class ScaleManager : MonoBehaviour {
     private int depthBig = 2;
     private int depthBigStatic = 1;
 
+    private float fovBigRoom = 80;
+    private float fovSmallRoom = 60;
+
     [Range(0.1f, 1f)]
     public float doorSize = 0.1f;
 
@@ -199,10 +202,22 @@ public class ScaleManager : MonoBehaviour {
 
         return false;
     }
+    
 
-	void Update () {
+    void Update () {
         // check for active room
         Vector3 relativePosition = player.transform.position - originalBigDoor.transform.position;
+
+        float fov = -relativePosition.z*6 + fovSmallRoom + (fovBigRoom - fovSmallRoom) / 2f;
+        
+        if(fov > fovBigRoom)
+        {
+            fov = fovBigRoom;
+        }else if(fov < fovSmallRoom)
+        {
+            fov = fovSmallRoom;
+        }
+        Camera.main.fieldOfView = fov;
         
         if(relativePosition.z > 0)
         {
@@ -212,6 +227,7 @@ public class ScaleManager : MonoBehaviour {
                 inNormalSize = true;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed / 2;
                 InvertActivation();
+                //SetCameraFOV(true);
             }
         }
         else{
@@ -221,6 +237,7 @@ public class ScaleManager : MonoBehaviour {
                 inNormalSize = false;
                 fpc.m_WalkSpeed = fpc.m_WalkSpeed * 2;
                 InvertActivation();
+               // SetCameraFOV(false);
             }
         }
 
@@ -266,6 +283,14 @@ public class ScaleManager : MonoBehaviour {
         {
             rooms[0].SetActive(true);
         }
+    }
+
+    private void SetCameraFOV(bool normal)
+    {
+        LeanTween.value(Camera.main.gameObject, Camera.main.fieldOfView, normal ? fovBigRoom : fovSmallRoom, 0.8f).setOnUpdate((float val) =>
+        {
+            Camera.main.fieldOfView = val;
+        }).setEase(LeanTweenType.easeInOutQuad);
     }
             
     // Sets all non-kinematic rigidbodys of children to kinematic rigidbodys and the other way round
