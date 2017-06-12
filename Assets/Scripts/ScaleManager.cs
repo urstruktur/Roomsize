@@ -13,6 +13,7 @@ public class ScaleManager : MonoBehaviour {
 
     public GameObject initialRoom;
     private GameObject originalBigDoor;
+    private GameObject originalSmallDoor;
 
     // public GameObject doorsillSmall;
     // public GameObject doorsillBig;
@@ -39,13 +40,21 @@ public class ScaleManager : MonoBehaviour {
     static public int currentRoom = 0;
     static public bool inNormalSize = true;
 
+    float walkSpeedSlow;
+    float walkSpeedFast;
+
     void Start() {
+
+
         // find player, set variable
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if(players.Length >= 1)
         {
             player = players[0];
             fpc = player.GetComponent<FirstPersonController>();
+            // save walking speed
+            walkSpeedSlow = fpc.m_WalkSpeed;
+            walkSpeedFast = fpc.m_WalkSpeed * 2;
         }
         else{
             Debug.LogError("No GameObject with Player tag!");
@@ -64,7 +73,7 @@ public class ScaleManager : MonoBehaviour {
 
         // create scaled rooms
         rooms = new GameObject[depthBig + depthSmall];
-        GameObject originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
+        originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
         originalBigDoor = GetFirstChildWithTag(initialRoom, "BigDoor");
 
         // --- INSTANTIATE DOWNSCALED ROOMS ---
@@ -90,6 +99,12 @@ public class ScaleManager : MonoBehaviour {
             foreach (Light lightCopy in lights)
             {
                 lightCopy.range = lightCopy.range * doorSize;
+
+                // if ambient: deactivate
+                if(lightCopy.shadows == LightShadows.None)
+                {
+                    lightCopy.enabled = false;
+                }
             }
 
             // associate rigidbodies
@@ -110,6 +125,18 @@ public class ScaleManager : MonoBehaviour {
                         // set all kinematic
                         copiedBody.isKinematic = true;
                     }
+                }
+            }
+
+            // deactivate colliders
+            Transform transforms = rooms[roomNr].GetComponentInChildren<Transform>();
+
+            foreach (Transform t in transforms)
+            {
+                MeshCollider coll = t.GetComponent<MeshCollider>();
+                if (coll  != null)
+                {
+                    coll.enabled = false;
                 }
             }
 
@@ -140,8 +167,6 @@ public class ScaleManager : MonoBehaviour {
             {
                 lightCopy.range = lightCopy.range / doorSize;
             }
-
-
 
             // associate rigidbodies
             Rigidbody[] bodies = rooms[roomNr].GetComponentsInChildren<Rigidbody>();
@@ -183,7 +208,6 @@ public class ScaleManager : MonoBehaviour {
                 }
             }
 
-
             previousRoom = rooms[roomNr];
         }
 
@@ -202,56 +226,56 @@ public class ScaleManager : MonoBehaviour {
 
         return false;
     }
-    
 
-    void Update () {
+
+    void Update() {
         // check for active room
         Vector3 relativePosition = player.transform.position - originalBigDoor.transform.position;
 
-        float fov = -relativePosition.z*6 + fovSmallRoom + (fovBigRoom - fovSmallRoom) / 2f;
-        
-        if(fov > fovBigRoom)
+        float fov = -relativePosition.z * 6 + fovSmallRoom + (fovBigRoom - fovSmallRoom) / 2f;
+
+        if (fov > fovBigRoom)
         {
             fov = fovBigRoom;
-        }else if(fov < fovSmallRoom)
+        } else if (fov < fovSmallRoom)
         {
             fov = fovSmallRoom;
         }
         Camera.main.fieldOfView = fov;
-        
-        if(relativePosition.z > 0)
+
+        if (relativePosition.z > 0)
         {
             if (!inNormalSize)
             {
                 Debug.Log("In original room.");
                 inNormalSize = true;
-                fpc.m_WalkSpeed = fpc.m_WalkSpeed / 2;
-                InvertActivation();
+                fpc.m_WalkSpeed = walkSpeedSlow;
+                //InvertActivation();
                 //SetCameraFOV(true);
             }
         }
-        else{
+        else {
             if (inNormalSize)
             {
                 Debug.Log("In big room.");
                 inNormalSize = false;
-                fpc.m_WalkSpeed = fpc.m_WalkSpeed * 2;
-                InvertActivation();
-               // SetCameraFOV(false);
+                fpc.m_WalkSpeed = walkSpeedFast;
+                // InvertActivation();
+                // SetCameraFOV(false);
             }
         }
 
         // apply transformation on all associated rigidbodies
-        
-        foreach(Rigidbody[] association in assocs)
+
+        foreach (Rigidbody[] association in assocs)
         {
-            for(int n = 0; n < association.Length; n++)
+            for (int n = 0; n < association.Length; n++)
             {
                 if (!association[n].isKinematic && association[n].transform.hasChanged)
                 {
                     for (int m = 0; m < association.Length; m++)
                     {
-                        if(m != n)
+                        if (m != n)
                         {
                             association[m].transform.localPosition = association[n].transform.localPosition;
                             association[m].transform.localRotation = association[n].transform.localRotation;
@@ -259,13 +283,39 @@ public class ScaleManager : MonoBehaviour {
                         }
                     }
 
+
+                    // activate biggest scale equivalent
+                    // if normal scale exits small door
+                    Vector3 relativeToSmallDoor = association[0].transform.position - originalSmallDoor.transform.position;
+                    //Debug.Log(relativeToSmallDoor);
+
+                    if (relativeToSmallDoor.z < 0)
+                    {
+                        if (!association[association.Length - 1].gameObject.activeSelf)
+                        {
+                            Debug.Log(association[association.Length - 1].name + " set active.");
+                            association[association.Length - 1].gameObject.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        if (association[association.Length - 1].gameObject.activeSelf)
+                        {
+                            Debug.Log("Set inactive.");
+                            association[association.Length - 1].gameObject.SetActive(false);
+                        }
+                    }
+
+
                     association[n].transform.hasChanged = false;
-                   
+
                     break; // no need to iterate through the rest
                 }
             }
         }
-        
+
+
+
         if (Input.GetKey("x"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
