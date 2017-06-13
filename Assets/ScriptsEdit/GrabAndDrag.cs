@@ -326,7 +326,7 @@ public class GrabAndDrag : MonoBehaviour {
 
 		Debug.DrawLine (origin, origin + Camera.main.transform.forward * range, new Color(1,0,0,0.1f));
 
-		UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
+		//UnityEditor.Handles.DrawWireDisc (origin, Vector3.up, radius);
 
 		if(selectedObj != null && boundary != null){
 			boundary.DrawBounds();

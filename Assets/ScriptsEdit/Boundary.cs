@@ -438,11 +438,11 @@ public class Boundary{
 
 
 	public void DrawBounds(){
-		UnityEditor.Handles.color = new Color (1, 0, 0, 0.5f);
-		UnityEditor.Handles.matrix = obj.transform.localToWorldMatrix;
-		UnityEditor.Handles.DrawWireCube (_center, size);
+		//UnityEditor.Handles.color = new Color (1, 0, 0, 0.5f);
+		//UnityEditor.Handles.matrix = obj.transform.localToWorldMatrix;
+		//UnityEditor.Handles.DrawWireCube (_center, size);
 
-		UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
-		UnityEditor.Handles.DrawWireCube (_center, Vector3.one * 0.1f);
+		//UnityEditor.Handles.color = new Color (1, 1, 1, 1f);
+		//UnityEditor.Handles.DrawWireCube (_center, Vector3.one * 0.1f);
 	}
 }
