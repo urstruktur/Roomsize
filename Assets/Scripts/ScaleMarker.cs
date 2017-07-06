@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScaleMarker : MonoBehaviour {
-    [HideInInspector]
+    //[HideInInspector]
     public int scaleLevel = 0;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 bigDoorPosition; 
 }
