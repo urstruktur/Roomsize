@@ -15,11 +15,6 @@ public class ScaleManager : MonoBehaviour {
     private GameObject originalBigDoor;
     private GameObject originalSmallDoor;
 
-    // public GameObject doorsillSmall;
-    // public GameObject doorsillBig;
-    //  public GameObject doorsillSmallExit;
-    //  public GameObject testObject;
-
     // [Range(1, 6)]
     private int depthSmall = 1;
     private int depthBig = 2;
@@ -37,6 +32,8 @@ public class ScaleManager : MonoBehaviour {
     private GameObject player;
     private FirstPersonController fpc;
 
+    private GameObject sceneryCameraBig;
+
     static public int currentRoom = 0;
     static public bool inNormalSize = true;
 
@@ -44,8 +41,6 @@ public class ScaleManager : MonoBehaviour {
     float walkSpeedFast;
 
     void Start() {
-
-
         // find player, set variable
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if(players.Length >= 1)
@@ -59,22 +54,27 @@ public class ScaleManager : MonoBehaviour {
         else{
             Debug.LogError("No GameObject with Player tag!");
         }
-      
+
         // collect rigidbodies 
         Rigidbody[] initialBodies = initialRoom.GetComponentsInChildren<Rigidbody>();
-        
+
+        // create scaled rooms
+        rooms = new GameObject[depthBig + depthSmall];
+        originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
+        originalBigDoor = GetFirstChildWithTag(initialRoom, "BigDoor");
+
         // initalize association array
         assocs = new Rigidbody[initialBodies.Length][];
         for(int i = 0; i < initialBodies.Length; i++)
         {
             assocs[i] = new Rigidbody[depthBig+depthSmall+1];
             assocs[i][0] = initialBodies[i];
-        }
 
-        // create scaled rooms
-        rooms = new GameObject[depthBig + depthSmall];
-        originalSmallDoor = GetFirstChildWithTag(initialRoom, "SmallDoor");
-        originalBigDoor = GetFirstChildWithTag(initialRoom, "BigDoor");
+            // add marker
+            ScaleMarker marker = initialBodies[i].gameObject.AddComponent<ScaleMarker>();
+            marker.scaleLevel = 0;
+            marker.bigDoorPosition = originalBigDoor.transform.position;
+        }
 
         // --- INSTANTIATE DOWNSCALED ROOMS ---
         GameObject previousRoom = initialRoom;
@@ -117,8 +117,8 @@ public class ScaleManager : MonoBehaviour {
                     {
                         assocs[a][roomNr + 1] = copiedBody;
 
-                        // add marker
-                        ScaleMarker marker = copiedBody.gameObject.AddComponent<ScaleMarker>();
+                        // set marker
+                        ScaleMarker marker = copiedBody.gameObject.GetComponent<ScaleMarker>();
                         marker.scaleLevel = -(roomNr + 1);
                         marker.bigDoorPosition = smallDoor.transform.position;
 
@@ -168,6 +168,20 @@ public class ScaleManager : MonoBehaviour {
                 lightCopy.range = lightCopy.range / doorSize;
             }
 
+            // for each big room level that exceed depthBigStatic delete all non-rigidbodies
+            if (roomNr - depthSmall + 1 > depthBigStatic)
+            {
+                Transform transforms = rooms[roomNr].GetComponentInChildren<Transform>();
+
+                foreach (Transform t in transforms)
+                {
+                    if ((t.GetComponent<Rigidbody>() == null || t.tag == "Ignore") && !HasRigidbodyChildren(t))
+                    {
+                        Destroy(t.gameObject);
+                    }
+                }
+            }
+
             // associate rigidbodies
             Rigidbody[] bodies = rooms[roomNr].GetComponentsInChildren<Rigidbody>();
             for(int a = 0; a < initialBodies.Length; a++) 
@@ -177,8 +191,8 @@ public class ScaleManager : MonoBehaviour {
                     {
                         assocs[a][depthSmall + roomNr] = copiedBody;
 
-                        // add marker
-                        ScaleMarker marker = copiedBody.gameObject.AddComponent<ScaleMarker>();
+                        // set marker
+                        ScaleMarker marker = copiedBody.gameObject.GetComponent<ScaleMarker>();
                         marker.scaleLevel = (roomNr - depthSmall + 1);
                         marker.bigDoorPosition = smallDoor.transform.position;
 
@@ -194,19 +208,6 @@ public class ScaleManager : MonoBehaviour {
                 }
             }
 
-            // for each big room level that exceed depthBigStatic delete all non-rigidbodies
-            if(roomNr - depthSmall + 1 > depthBigStatic)
-            {
-                Transform transforms = rooms[roomNr].GetComponentInChildren<Transform>();
-
-                foreach(Transform t in transforms)
-                {
-                    if(t.GetComponent<Rigidbody>() == null && !HasRigidbodyChildren(t))
-                    {
-                        Destroy(t.gameObject);
-                    }
-                }
-            }
 
             previousRoom = rooms[roomNr];
         }
@@ -218,7 +219,7 @@ public class ScaleManager : MonoBehaviour {
     {
         foreach (Transform t in parent.GetComponentsInChildren<Transform>())
         {
-            if (t.GetComponent<Rigidbody>() != null)
+            if (t.GetComponent<Rigidbody>() != null && t.tag != "Ignore")
             {
                 return true;
             }
