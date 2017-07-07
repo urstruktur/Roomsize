@@ -68,8 +68,12 @@ public class ScaleManager : MonoBehaviour {
             player = players[0];
             fpc = player.GetComponent<FirstPersonController>();
             // save walking speed
-            walkSpeedSlow = fpc.m_WalkSpeed;
-            walkSpeedFast = fpc.m_WalkSpeed * 2;
+
+            if(fpc != null)
+            {
+                walkSpeedSlow = fpc.m_WalkSpeed;
+                walkSpeedFast = fpc.m_WalkSpeed * 2;
+            }
         }
         else{
             Debug.LogError("No GameObject with Player tag!");
