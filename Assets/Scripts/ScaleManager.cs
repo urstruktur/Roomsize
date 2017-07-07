@@ -26,6 +26,9 @@ public class ScaleManager : MonoBehaviour {
     [Range(0.1f, 1f)]
     public float doorSize = 0.1f;
 
+    public int enviromentOffset = 200;
+    public GameObject enviroment;
+
     private GameObject[] rooms;
     private Rigidbody[][] assocs;
 
@@ -45,6 +48,19 @@ public class ScaleManager : MonoBehaviour {
     float walkSpeedFast;
 
     void Start() {
+        if (enviroment == null) enviroment = GameObject.Find("environment");
+        if (enviroment != null)
+        {
+            Vector3 pos = enviroment.transform.position;
+            pos.y += enviromentOffset;
+            enviroment.transform.position = pos;
+
+            pos = Camera.main.transform.position;
+            pos.y += enviromentOffset;
+            sceneryCameraNormal.transform.position = pos;
+            sceneryCameraBig.transform.position = pos;
+        }
+
         // find player, set variable
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if(players.Length >= 1)
