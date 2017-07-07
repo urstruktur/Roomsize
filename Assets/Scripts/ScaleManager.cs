@@ -252,9 +252,10 @@ public class ScaleManager : MonoBehaviour {
                     }
                 }
 
-                Debug.Log("IT HAPPENDED");
-                sceneryCameraBig.gameObject.transform.SetParent(rooms[roomNr].transform);
-                
+                if (sceneryCameraBig != null)
+                {
+                    sceneryCameraBig.gameObject.transform.SetParent(rooms[roomNr].transform);
+                }
             }
 
 
@@ -294,8 +295,11 @@ public class ScaleManager : MonoBehaviour {
         Camera.main.fieldOfView = fov;
 
         // set rotation of scenery camera relative to big room
-        sceneryCameraBig.transform.localRotation = Camera.main.transform.rotation;
-        sceneryCameraBig.fieldOfView = Camera.main.fieldOfView;
+        if(sceneryCameraBig != null)
+        {
+            sceneryCameraBig.transform.localRotation = Camera.main.transform.rotation;
+            sceneryCameraBig.fieldOfView = Camera.main.fieldOfView;
+        }
         //sceneryCameraBig.transform.localPosition = Camera.main.transform.localPosition;
         //Vector3 pos = sceneryCameraBig.transform.position;
         //pos.y += 100;
