@@ -252,6 +252,7 @@ public class ScaleManager : MonoBehaviour {
                     }
                 }
 
+                // set parent of camera of big room render texture
                 if (sceneryCameraBig != null)
                 {
                     sceneryCameraBig.gameObject.transform.SetParent(rooms[roomNr].transform);
@@ -297,13 +298,20 @@ public class ScaleManager : MonoBehaviour {
         // set rotation of scenery camera relative to big room
         if(sceneryCameraBig != null)
         {
-            sceneryCameraBig.transform.localRotation = Camera.main.transform.rotation;
+            //- rotation test here -
+            Vector3 degrees = Camera.main.transform.rotation.eulerAngles;
+            float yRot = originalSmallDoor.transform.rotation.eulerAngles.y;
+            degrees = new Vector3(degrees.x, degrees.y - (yRot*2), degrees.z);
+            sceneryCameraBig.transform.localRotation = Quaternion.Euler(degrees);
+            //--
+            //Quaternion newRotation = Camera.main.transform.rotation * originalSmallDoor.transform.rotation;
+            //sceneryCameraBig.transform.localRotation = Camera.main.transform.rotation;
             sceneryCameraBig.fieldOfView = Camera.main.fieldOfView;
         }
         //sceneryCameraBig.transform.localPosition = Camera.main.transform.localPosition;
         //Vector3 pos = sceneryCameraBig.transform.position;
         //pos.y += 100;
-        //sceneryCameraBig.transform.position = pos;
+        sceneryCameraBig.transform.position = sceneryCameraNormal.transform.position;
 
         if (relativePosition.z > 0)
         {
