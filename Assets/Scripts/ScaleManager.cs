@@ -16,9 +16,9 @@ public class ScaleManager : MonoBehaviour {
     private GameObject originalSmallDoor;
 
     // [Range(1, 6)]
-    private int depthSmall = 1;
-    private int depthBig = 2;
-    private int depthBigStatic = 1;
+    private int depthSmall = 1; // how many levels of small rooms are instantiated
+    private int depthBig = 2;  // how many levels of big rooms are instantiated
+    private int depthBigStatic = 1;  // how many levels of big rooms have static gameObjects not removed
 
     private float fovBigRoom = 80;
     private float fovSmallRoom = 60;
@@ -173,15 +173,25 @@ public class ScaleManager : MonoBehaviour {
             rooms[roomNr] = instance;
             rooms[roomNr].name = "room " + (roomNr - depthSmall + 1);
 
+            SetLayerRecursively(rooms[roomNr], LayerMask.NameToLayer("BigRoom"));
+
             // scale light range
             Light[] lights = rooms[roomNr].GetComponentsInChildren<Light>();
             foreach (Light lightCopy in lights)
             {
                 lightCopy.range = lightCopy.range / doorSize;
 
-                if (lightCopy.type == LightType.Directional)
+               
+                if (lightCopy.type == LightType.Directional) 
                 {
-                    lightCopy.enabled = false;
+                    lightCopy.cullingMask &= ~(1 << LayerMask.NameToLayer("NormalRoom")); // turn off normal room
+                    lightCopy.cullingMask |= 1 << LayerMask.NameToLayer("BigRoom"); // turn on big room
+
+                    if ((roomNr - depthSmall + 1) > 1)
+                    {
+                        // disable directional lights in all bigger levels than 1
+                        lightCopy.enabled = false;
+                    }
                 }
             }
 
@@ -417,6 +427,16 @@ public class ScaleManager : MonoBehaviour {
         translate.y = matrix.m13;
         translate.z = matrix.m23;
         return translate;
+    }
+
+    public void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+
+        foreach(Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
     }
 
     public static GameObject GetFirstChildWithTag(GameObject parent, String tag){
