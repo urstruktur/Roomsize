@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 2;
 	float sensitivity = 3;
 
+	public float fallspeed = 3;
+
+	Vector3 respawn;
+
 	CursorLockMode cursor = CursorLockMode.Locked;
 
 	[HideInInspector]
@@ -50,7 +54,8 @@ public class PlayerController : MonoBehaviour {
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		rigid.useGravity = false;
 
-
+		//RESPAWN POSITION
+		respawn = transform.position;
 	}
 
 	// Update is called once per frame
@@ -59,6 +64,10 @@ public class PlayerController : MonoBehaviour {
 
 		//GRAVITY
 		AddForce (gravity, 9.81f);
+
+		if (IsGrounded () && rigid.velocity.y < -fallspeed) {
+			Respawn ();
+		}
 
 		transform.position = transform.position + View * Vector3.forward * movement.x * speed * Time.fixedDeltaTime;
 		transform.position = transform.position + View * Vector3.right * movement.y * speed * Time.fixedDeltaTime;
@@ -108,8 +117,6 @@ public class PlayerController : MonoBehaviour {
 			rigid.velocity += gravity * -1 * verticalSpeed; //Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 		}
 
-
-
 	}
 
 	void RotateView(){
@@ -142,6 +149,10 @@ public class PlayerController : MonoBehaviour {
 		}
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = (CursorLockMode.Locked != cursor);
+	}
+
+	void Respawn(){
+		transform.position = respawn;
 	}
 
 	bool IsGrounded (){
