@@ -32,10 +32,11 @@ public class ScaleManager : MonoBehaviour {
     private GameObject player;
     private FirstPersonController fpc;
 
-    private GameObject sceneryCameraBig;
-
     public Material windowPortalMaterial;
     public Material windowPortalMaterialBig;
+
+    public Camera sceneryCameraNormal;
+    public Camera sceneryCameraBig;
 
     static public int currentRoom = 0;
     static public bool inNormalSize = true;
@@ -250,6 +251,10 @@ public class ScaleManager : MonoBehaviour {
                         }
                     }
                 }
+
+                Debug.Log("IT HAPPENDED");
+                sceneryCameraBig.gameObject.transform.SetParent(rooms[roomNr].transform);
+                
             }
 
 
@@ -287,6 +292,14 @@ public class ScaleManager : MonoBehaviour {
             fov = fovSmallRoom;
         }
         Camera.main.fieldOfView = fov;
+
+        // set rotation of scenery camera relative to big room
+        sceneryCameraBig.transform.localRotation = Camera.main.transform.rotation;
+        sceneryCameraBig.fieldOfView = Camera.main.fieldOfView;
+        //sceneryCameraBig.transform.localPosition = Camera.main.transform.localPosition;
+        //Vector3 pos = sceneryCameraBig.transform.position;
+        //pos.y += 100;
+        //sceneryCameraBig.transform.position = pos;
 
         if (relativePosition.z > 0)
         {
@@ -345,7 +358,7 @@ public class ScaleManager : MonoBehaviour {
                     {
                         if (association[association.Length - 1].gameObject.activeSelf)
                         {
-                            Debug.Log("Set inactive.");
+                            //Debug.Log("Set inactive.");
                             association[association.Length - 1].gameObject.SetActive(false);
                         }
                     }

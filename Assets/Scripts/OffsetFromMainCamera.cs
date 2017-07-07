@@ -7,7 +7,7 @@ using UnityEngine;
  **/
 public class OffsetFromMainCamera : MonoBehaviour {
 
-    private float initialYPos;
+    public float initialYPos;
     private Camera cam;
 
 	// Use this for initialization
