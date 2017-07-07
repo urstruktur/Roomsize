@@ -34,6 +34,9 @@ public class ScaleManager : MonoBehaviour {
 
     private GameObject sceneryCameraBig;
 
+    public Material windowPortalMaterial;
+    public Material windowPortalMaterialBig;
+
     static public int currentRoom = 0;
     static public bool inNormalSize = true;
 
@@ -70,10 +73,14 @@ public class ScaleManager : MonoBehaviour {
             assocs[i] = new Rigidbody[depthBig+depthSmall+1];
             assocs[i][0] = initialBodies[i];
 
-            // add marker
-            ScaleMarker marker = initialBodies[i].gameObject.AddComponent<ScaleMarker>();
-            marker.scaleLevel = 0;
-            marker.bigDoorPosition = originalBigDoor.transform.position;
+            // add marker if not available
+            ScaleMarker marker = initialBodies[i].gameObject.GetComponent<ScaleMarker>();
+            if(marker == null)
+            {
+                marker = initialBodies[i].gameObject.AddComponent<ScaleMarker>();
+            }
+            marker.ScaleLevel = 0;
+            marker.BigDoorPosition = originalBigDoor.transform.position;
         }
 
         // --- INSTANTIATE DOWNSCALED ROOMS ---
@@ -105,6 +112,11 @@ public class ScaleManager : MonoBehaviour {
                 {
                     lightCopy.enabled = false;
                 }
+
+                if (lightCopy.type == LightType.Directional)
+                {
+                    lightCopy.enabled = false;
+                }
             }
 
             // associate rigidbodies
@@ -119,8 +131,8 @@ public class ScaleManager : MonoBehaviour {
 
                         // set marker
                         ScaleMarker marker = copiedBody.gameObject.GetComponent<ScaleMarker>();
-                        marker.scaleLevel = -(roomNr + 1);
-                        marker.bigDoorPosition = smallDoor.transform.position;
+                        marker.ScaleLevel = -(roomNr + 1);
+                        marker.BigDoorPosition = smallDoor.transform.position;
 
                         // set all kinematic
                         copiedBody.isKinematic = true;
@@ -166,6 +178,11 @@ public class ScaleManager : MonoBehaviour {
             foreach (Light lightCopy in lights)
             {
                 lightCopy.range = lightCopy.range / doorSize;
+
+                if (lightCopy.type == LightType.Directional)
+                {
+                    lightCopy.enabled = false;
+                }
             }
 
             // for each big room level that exceed depthBigStatic delete all non-rigidbodies
@@ -193,8 +210,8 @@ public class ScaleManager : MonoBehaviour {
 
                         // set marker
                         ScaleMarker marker = copiedBody.gameObject.GetComponent<ScaleMarker>();
-                        marker.scaleLevel = (roomNr - depthSmall + 1);
-                        marker.bigDoorPosition = smallDoor.transform.position;
+                        marker.ScaleLevel = (roomNr - depthSmall + 1);
+                        marker.BigDoorPosition = smallDoor.transform.position;
 
                         // only invert kinematic in first room copy, others always kinematic
                         if (roomNr == depthSmall)
@@ -203,6 +220,23 @@ public class ScaleManager : MonoBehaviour {
                         }else
                         {
                             copiedBody.isKinematic = true;
+                        }
+                    }
+                }
+            }
+
+            // exchange window portal materials in scale level 1
+            if(roomNr == 1)
+            {
+                Transform[] transforms = rooms[roomNr].GetComponentsInChildren<Transform>();
+                foreach (Transform t in transforms)
+                {
+                    Renderer renderer = t.GetComponent<Renderer>();
+                    if (renderer != null)
+                    {
+                        if (renderer.sharedMaterial == windowPortalMaterial)
+                        {
+                            renderer.sharedMaterial = windowPortalMaterialBig;
                         }
                     }
                 }
@@ -283,8 +317,7 @@ public class ScaleManager : MonoBehaviour {
                             association[m].transform.hasChanged = false;
                         }
                     }
-
-
+                    
                     // activate biggest scale equivalent
                     // if normal scale exits small door
                     Vector3 relativeToSmallDoor = association[0].transform.position - originalSmallDoor.transform.position;
@@ -306,17 +339,14 @@ public class ScaleManager : MonoBehaviour {
                             association[association.Length - 1].gameObject.SetActive(false);
                         }
                     }
-
-
+                    
                     association[n].transform.hasChanged = false;
 
                     break; // no need to iterate through the rest
                 }
             }
         }
-
-
-
+        
         if (Input.GetKey("x"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -336,13 +366,14 @@ public class ScaleManager : MonoBehaviour {
         }
     }
 
+    /*
     private void SetCameraFOV(bool normal)
     {
         LeanTween.value(Camera.main.gameObject, Camera.main.fieldOfView, normal ? fovBigRoom : fovSmallRoom, 0.8f).setOnUpdate((float val) =>
         {
             Camera.main.fieldOfView = val;
         }).setEase(LeanTweenType.easeInOutQuad);
-    }
+    }*/
             
     // Sets all non-kinematic rigidbodys of children to kinematic rigidbodys and the other way round
     private void InvertKinematic(Transform t)
