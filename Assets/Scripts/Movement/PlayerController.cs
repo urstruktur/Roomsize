@@ -12,10 +12,13 @@ public class PlayerController : MonoBehaviour {
 
 	Vector2 movement = Vector2.zero;
 
-	float speed = 5;
+	public float speed = 2;
 	float sensitivity = 3;
 
 	CursorLockMode cursor = CursorLockMode.Locked;
+
+	[HideInInspector]
+	public bool freeze = false;
 
 	Rigidbody _rigid;
 	public Rigidbody rigid{
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour {
 	void Awake () {
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		rigid.useGravity = false;
+
+
 	}
 
 	// Update is called once per frame
@@ -72,15 +77,11 @@ public class PlayerController : MonoBehaviour {
 		Camera.main.transform.rotation = View;
 	}
 
+	float maxangle = 65;
 	void UseInputs(){
 
 		//CAMERA
-		float horizontal = Input.GetAxis ("Mouse X") * sensitivity;
-		float vertical = Input.GetAxis ("Mouse Y") * sensitivity;
-
-		yaw = Quaternion.AngleAxis (horizontal, Vector3.up) * yaw; //HORIZONTAL
-		pitch = Quaternion.AngleAxis (vertical, Vector3.right) * pitch; //VERTICAL
-
+		RotateView();
 
 		//MOVEMENT
 		movement = Vector2.zero;
@@ -99,9 +100,37 @@ public class PlayerController : MonoBehaviour {
 		if (drag != null)
 			drag.OnInput ();
 
-		//Dragbody body = !drag.hasObject ? drag.DetectObject () : null;
+		//JUMP
+		if (IsGrounded() && Input.GetButton("Jump")){
+
+			float jumpHeight = 2.0f;
+			float verticalSpeed = Mathf.Sqrt(2 * jumpHeight * gravity.magnitude);
+			rigid.velocity += gravity * -1 * verticalSpeed; //Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+		}
 
 
+
+	}
+
+	void RotateView(){
+		if (freeze)
+			return;
+
+		float horizontal = Input.GetAxis ("Mouse X") * sensitivity;
+		float vertical = Input.GetAxis ("Mouse Y") * sensitivity;
+
+		yaw = Quaternion.AngleAxis (horizontal, Vector3.up) * yaw; //HORIZONTAL
+		pitch = Quaternion.AngleAxis (vertical, -Vector3.right) * pitch; //VERTICAL
+
+		//LOCK ANGLE
+		float angle = Quaternion.Angle(Quaternion.identity, pitch);
+		if (angle > maxangle) {
+			float value = (angle - maxangle);
+			Quaternion max = Quaternion.AngleAxis (value, Vector3.right);
+			Quaternion min = Quaternion.AngleAxis (-value, Vector3.right);
+
+			pitch = Mathf.Abs (Quaternion.Angle (max, pitch) - 45) > Mathf.Abs (Quaternion.Angle (min, pitch) - 45) ? pitch * max : pitch * min;
+		}
 	}
 
 	void UseCursor(){
@@ -113,6 +142,30 @@ public class PlayerController : MonoBehaviour {
 		}
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = (CursorLockMode.Locked != cursor);
+	}
+
+	bool IsGrounded (){
+
+		Ray ray = new Ray(transform.position, gravity);
+
+		RaycastHit[] sphereHit = Physics.SphereCastAll(ray.origin, 0.1f, ray.direction, 0.01f);
+
+		for (int i = 0; i < sphereHit.Length; i++) {
+
+			Transform trans = sphereHit [i].collider.transform;
+
+			if (trans.root == transform) {
+				continue;
+			}
+
+			if(sphereHit [i].distance <= 0.001f) {
+				return true;
+			}
+
+			//Debug.Log (root.name);
+		}
+
+		return false;
 	}
 
 

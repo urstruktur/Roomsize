@@ -22,6 +22,8 @@ public class GrabAndDrag : MonoBehaviour {
 
 	public float range = 4;
 	public float radius = 3;
+
+	public float spinRotation = 3.0f;
 	public float dampRotation = 3.0f;
 
 	void Awake(){
@@ -63,6 +65,22 @@ public class GrabAndDrag : MonoBehaviour {
 			else
 				ReleaseObject();
 		}
+
+		if (Input.GetMouseButton(1) && selected != null) {
+			player.freeze = true;
+
+			float adjustX = Input.GetAxis ("Mouse X") * spinRotation;
+			float adjustY = Input.GetAxis ("Mouse Y") * spinRotation;
+
+			Quaternion yaw = Quaternion.AngleAxis (adjustX, Vector3.up); //HORIZONTAL
+			Quaternion pitch = Quaternion.AngleAxis (adjustY,  Vector3.right); //VERTICAL
+
+			RotateObject (yaw * pitch);
+		}
+
+		if (Input.GetMouseButtonUp (1)) {
+			player.freeze = false;
+		}
 	}
 
 	void GrabObject(System.Object obj){
@@ -87,6 +105,7 @@ public class GrabAndDrag : MonoBehaviour {
 		selected.rigid.mass = 0;
 		selected.rigid.useGravity = false;
 
+		selected.neutral = Quaternion.Inverse(Quaternion.LookRotation(AxisForward())) * selected.obj.transform.rotation;
 
 		//if(obj != isType()
 		
@@ -107,6 +126,15 @@ public class GrabAndDrag : MonoBehaviour {
 
 		//rotation = Quaternion.identity;
 		//selectedObj = null;
+	}
+
+	void RotateObject(Quaternion q){
+
+		if (!hasObject)
+			return;
+
+		selected.neutral = q * selected.neutral;
+
 	}
 
 	void DragObject(){
@@ -144,6 +172,7 @@ public class GrabAndDrag : MonoBehaviour {
 		selected.rigid.velocity = way/ Time.fixedDeltaTime;
 
 
+
 		//ROTATION DAMPING
 		if (selected.rigid.angularVelocity.magnitude >= 0.01f) {
 			float value = ( 1/ selected.rigid.angularVelocity.magnitude) * (dampRotation);//* Time.fixedDeltaTime) ;//rigid.angularVelocity / ((dampRoation + 1) * 100 * Time.fixedDeltaTime);
@@ -151,6 +180,8 @@ public class GrabAndDrag : MonoBehaviour {
 		} else {
 			selected.rigid.angularVelocity = Vector3.zero;
 		}
+
+		selected.obj.transform.rotation = Quaternion.LookRotation (axis_forward) * selected.neutral;
 	}
 
 	#if UNITY_EDITOR
@@ -171,6 +202,8 @@ public class GrabAndDrag : MonoBehaviour {
 		public GameObject obj;
 		public Rigidbody rigid;
 		public float mass;
+
+		public Quaternion neutral;
 
 		bool init = true;
 
