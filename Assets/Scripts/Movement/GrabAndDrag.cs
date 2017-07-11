@@ -10,9 +10,6 @@ public class GrabAndDrag : MonoBehaviour {
 
 	Storage selected = null;
 
-
-
-
 	public bool hasObject{
 		get{
 			return (selected != null);
@@ -20,8 +17,8 @@ public class GrabAndDrag : MonoBehaviour {
 
 	}
 
-	public float range = 4;
-	public float radius = 3;
+	public float range = 3;
+	public float radius = 1.5f;
 
 	public float spinRotation = 3.0f;
 	public float dampRotation = 3.0f;
@@ -66,6 +63,7 @@ public class GrabAndDrag : MonoBehaviour {
 				ReleaseObject();
 		}
 
+
 		if (Input.GetMouseButton(1) && selected != null) {
 			player.freeze = true;
 
@@ -81,6 +79,9 @@ public class GrabAndDrag : MonoBehaviour {
 		if (Input.GetMouseButtonUp (1)) {
 			player.freeze = false;
 		}
+
+
+
 	}
 
 	void GrabObject(System.Object obj){
@@ -151,12 +152,16 @@ public class GrabAndDrag : MonoBehaviour {
 		float distance =  Mathf.Min (radius / Vector3.Project(forward, (axis_forward * radius)).magnitude , maxRadius);
 
 		// ROTATION
+
+
+
+
+		//
+
 		//selectedObj.transform.rotation = Quaternion.LookRotation (axis_forward) * t_rotation * rotation;
 
 		Vector3 goal = origin + player.View * Vector3.forward * (distance);
 		Vector3 way = (goal - selected.center).normalized * Vector3.Distance (selected.center, goal);
-
-
 
 		Debug.DrawLine (origin, goal, new Color(1,0,0,1f));
 		Debug.DrawLine (selected.center, goal, new Color(0,0,1,1f));
@@ -171,7 +176,8 @@ public class GrabAndDrag : MonoBehaviour {
 		//MOVE OBJECT
 		selected.rigid.velocity = way/ Time.fixedDeltaTime;
 
-
+		//ROTATION
+		selected.obj.transform.rotation = Quaternion.LookRotation (axis_forward) * selected.neutral;
 
 		//ROTATION DAMPING
 		if (selected.rigid.angularVelocity.magnitude >= 0.01f) {
@@ -181,7 +187,6 @@ public class GrabAndDrag : MonoBehaviour {
 			selected.rigid.angularVelocity = Vector3.zero;
 		}
 
-		selected.obj.transform.rotation = Quaternion.LookRotation (axis_forward) * selected.neutral;
 	}
 
 	#if UNITY_EDITOR
