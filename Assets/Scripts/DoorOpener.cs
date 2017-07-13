@@ -5,19 +5,12 @@ using UnityEngine;
 
 public class DoorOpener : MonoBehaviour
 {
-    [Header("Use \"Door\" tag to animate doors on trigger enter.")]
-
-    private GameObject player;
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-    }
-
+    //[Header("Use \"Door\" tag to animate doors on trigger enter.")]
+    
     void OnTriggerEnter(Collider other)
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-        if(ReferenceEquals( other.gameObject, player))
+        if(other.gameObject.tag == "Player")
         foreach(GameObject door in doors)
         {
             Animator animator = door.GetComponent<Animator>();
@@ -37,7 +30,7 @@ public class DoorOpener : MonoBehaviour
     {
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
 
-        if (ReferenceEquals(other.gameObject, player))
+        if (other.gameObject.tag == "Player")
         foreach (GameObject door in doors)
         {
             Animator animator = door.GetComponent<Animator>();
