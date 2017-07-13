@@ -33,7 +33,7 @@ public class ScaleManager : MonoBehaviour {
     private Rigidbody[][] assocs;
 
     private GameObject player;
-    private FirstPersonController fpc;
+    private PlayerController fpc;
 
     public Material windowPortalMaterial;
     public Material windowPortalMaterialBig;
@@ -62,21 +62,17 @@ public class ScaleManager : MonoBehaviour {
         }
 
         // find player, set variable
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if(players.Length >= 1)
+        fpc = FindObjectOfType<PlayerController>();
+        // save walking speed
+        if (fpc != null)
         {
-            player = players[0];
-            fpc = player.GetComponent<FirstPersonController>();
-            // save walking speed
-
-            if(fpc != null)
-            {
-                walkSpeedSlow = fpc.m_WalkSpeed;
-                walkSpeedFast = fpc.m_WalkSpeed * 2;
-            }
+            walkSpeedSlow = fpc.speed;
+            walkSpeedFast = fpc.speed * 2;
+            player = fpc.gameObject;
         }
-        else{
-            Debug.LogError("No GameObject with Player tag!");
+        else
+        {
+            Debug.LogError("No Player Controller Found!");
         }
 
         // collect rigidbodies 
@@ -339,7 +335,7 @@ public class ScaleManager : MonoBehaviour {
             {
                 Debug.Log("In original room.");
                 inNormalSize = true;
-                fpc.m_WalkSpeed = walkSpeedSlow;
+                fpc.speed = walkSpeedSlow;
                 //InvertActivation();
                 //SetCameraFOV(true);
             }
@@ -349,7 +345,7 @@ public class ScaleManager : MonoBehaviour {
             {
                 Debug.Log("In big room.");
                 inNormalSize = false;
-                fpc.m_WalkSpeed = walkSpeedFast;
+                fpc.speed = walkSpeedFast;
                 // InvertActivation();
                 // SetCameraFOV(false);
             }
