@@ -8,6 +8,9 @@ public class GrabAndDrag : MonoBehaviour {
 	//public GameObject selectedObj;
 	PlayerController player;
 
+	AnimationCurve curve = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.5f, 1f), new Keyframe(1f, 0f));
+
+
 	Storage selected = null;
 
 	public bool hasObject{
@@ -45,8 +48,15 @@ public class GrabAndDrag : MonoBehaviour {
 		return axis_forward;
 	}
 
-	public void OnInput(){
+	public void OnDrag(){
 		
+
+
+
+	}
+
+	public void OnInput(){
+
 		Vector3 origin = Camera.main.transform.position;
 		Vector3 forward = player.View * Vector3.forward;
 
@@ -57,12 +67,12 @@ public class GrabAndDrag : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonDown (0)) {
-			if(!hasObject)
-				GrabObject(obj);
-			else
-				ReleaseObject();
+			if (!hasObject) {
+				GrabObject (obj);
+			} else { 
+				ReleaseObject ();
+			}
 		}
-
 
 		if (Input.GetMouseButton(1) && selected != null) {
 			player.freeze = true;

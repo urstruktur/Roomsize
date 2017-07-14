@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode, RequireComponent(typeof(Rigidbody))]
 public class Dragbody : MonoBehaviour {
 
-	public AnimationCurve curve = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.5f, 1f), new Keyframe(1f, 0f));
 
 	public Size size;
 	public enum Size{

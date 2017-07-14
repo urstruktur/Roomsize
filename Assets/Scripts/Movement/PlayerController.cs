@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	Vector2 movement = Vector2.zero;
 
 	public float speed = 2;
-	float sensitivity = 3;
+	float sensitivity = 2.6f;
 
 	public float jumpHeight = 1.6f;
 	public float fallspeed = 20;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 		rigid.useGravity = false;
 
 		//RESPAWN POSITION
@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		transform.position = transform.position + View * Vector3.forward * movement.x * speed * Time.fixedDeltaTime;
+		transform.position = transform.position + View * Vector3.right * movement.y * speed * Time.fixedDeltaTime;
+
 		UseInputs();
 
 		//GRAVITY
@@ -70,8 +73,7 @@ public class PlayerController : MonoBehaviour {
 			Respawn ();
 		}
 
-		transform.position = transform.position + View * Vector3.forward * movement.x * speed * Time.fixedDeltaTime;
-		transform.position = transform.position + View * Vector3.right * movement.y * speed * Time.fixedDeltaTime;
+
 	}
 
 	void AddForce(Vector3 dir, float force, float mass = 1){
@@ -80,11 +82,18 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update () {
+
+		//MOUSE
+		if (drag != null)
+			drag.OnInput ();
+
 		UseCursor ();
+
+		Camera.main.transform.rotation = View;
 	}
 
 	void LateUpdate () {
-		Camera.main.transform.rotation = View;
+		//Camera.main.transform.rotation = View;
 	}
 
 	float maxangle = 65;
@@ -108,7 +117,7 @@ public class PlayerController : MonoBehaviour {
 
 		//MOUSE
 		if (drag != null)
-			drag.OnInput ();
+			drag.OnDrag ();
 
 		//JUMP
 		if (IsGrounded() && Input.GetButton("Jump")){

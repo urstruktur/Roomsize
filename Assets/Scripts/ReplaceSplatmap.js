@@ -14,7 +14,7 @@ Two things of note:
 
 */ 
 
-import System.IO;
+/*import System.IO;
 
 class ReplaceSplatmap extends ScriptableWizard
 {
@@ -68,4 +68,4 @@ static function Replace (){
     ScriptableWizard.DisplayWizard(
         "ReplaceSplatmap", ReplaceSplatmap, "Replace");
 }
-}
+}*/
