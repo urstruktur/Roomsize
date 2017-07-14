@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 2;
 	float sensitivity = 3;
 
-	public float fallspeed = 3;
+	public float jumpHeight = 1.6f;
+	public float fallspeed = 20;
 
 	Vector3 respawn;
 
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour {
 		//JUMP
 		if (IsGrounded() && Input.GetButton("Jump")){
 
-			float jumpHeight = 2.0f;
+
 			float verticalSpeed = Mathf.Sqrt(2 * jumpHeight * gravity.magnitude);
 			rigid.velocity += gravity * -1 * verticalSpeed; //Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 		}
